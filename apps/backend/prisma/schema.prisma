@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//forma de definir uma lista fechada de valores permitidos
+enum UserRole {
+  ADMIN
+  TECHNICIAN
+  CLIENT
+}
+
+//Tabela USER
+model User {
+  id String @id @default(uuid()) // cria ids unicos em formato de UUID,
+  name String //cria nome string
+  email String @unique //cria email unico
+  password String //senha string
+  role UserRole //define a role ADMIN | tecnico | Client
+  createdAt DateTime @default(now()) // quando foi criado
+  updatedAt DateTime @updatedAt // ultima atualizacao
+
+  @@map("users") // define o nome da tabela
+}
