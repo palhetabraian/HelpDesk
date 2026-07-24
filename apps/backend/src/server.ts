@@ -1,19 +1,9 @@
-import express from 'express';
+import { app } from "./app";
 
-//cria aplicacao backend
-const app = express();
+//porta que vai rodar o backend
 const PORT = 3333;
 
-//permite que api receba json no corpo das requisicoes
-app.use(express.json());
-
-app.get('/health', (request, response) => {
-  return response.json({
-    status: 'ok',
-    message: 'HelpDesk API is running',
-  });
-});
-
+//inicia o servidor
 app.listen(PORT, () => {
   console.log(`HelpDesk API is running on port ${PORT}`);
 });
