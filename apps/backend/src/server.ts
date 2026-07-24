@@ -1,7 +1,9 @@
-import { app } from "./app";
+import 'dotenv';
+
+import { app } from './app';
 
 //porta que vai rodar o backend
-const PORT = 3333;
+const PORT = Number(process.env.PORT) || 3333;
 
 //inicia o servidor
 app.listen(PORT, () => {
