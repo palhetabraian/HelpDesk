@@ -1,7 +1,6 @@
 import express from 'express';
 
-import { prisma } from './lib/prisma';
-
+import { usersRoutes } from './routes/users.routes';
 // cria aplicacao backend
 export const app = express();
 
@@ -16,8 +15,4 @@ app.get('/health', (request, response) => {
   });
 });
 
-app.get('/users', async (request, response) => {
-  const users = await prisma.user.findMany(); // busca diversos registros da tabela usuario
-
-  return response.json(users); // mostra os registros do usuario
-});
+app.use('/users', usersRoutes);
