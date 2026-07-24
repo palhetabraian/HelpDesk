@@ -1,0 +1,32 @@
+# Dependências
+node_modules
+
+# Código compilado e cobertura
+dist
+coverage
+
+# Variáveis de ambiente
+.env
+.env.
+!.env.example
+
+# Logs
+*.log
+npm-debug.log
+
+# Arquivos temporários e uploads
+tmp
+uploads
+
+# Bancos locais
+*.db
+*.sqlite
+*.sqlite3
+
+# Editores
+.vscode/
+.idea/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
