@@ -1,6 +1,9 @@
 # Dependencias
 node_modules
 
+# Material de apoio do projeto
+docs/
+
 # Codigo compilado e cobertura
 dist
 coverage
