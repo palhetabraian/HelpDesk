@@ -1,12 +1,10 @@
-// rota responsavel pelos usuarios
 import { Router } from 'express';
-import { prisma } from '../lib/prisma';
+
+import { UsersController } from '../controllers/users.controller';
 
 export const usersRoutes = Router();
 
-//rota responsavel por usuarios
-usersRoutes.get('/', async (request, response) => {
-  const users = await prisma.user.findMany(); //busca todos os registro da tabela
+const usersController = new UsersController();
 
-  return response.json(users); // retorna os registos
-});
+usersRoutes.get('/', usersController.index);
+usersRoutes.post('/', usersController.create);
