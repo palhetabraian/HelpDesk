@@ -41,7 +41,7 @@ export class UsersController {
         name: data.name,
         email: data.email,
         password: passwordHash,
-        role: data.role,
+        role: 'CLIENT',
       },
       select: {
         id: true,
