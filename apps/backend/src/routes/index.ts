@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import { ensureAuthenticated } from '../shared/middlewares/ensure-authenticated';
 import { sessionsRoutes } from './sessions.routes';
 import { usersRoutes } from './users.routes';
 
@@ -14,3 +15,7 @@ routes.get('/health', (request, response) => {
 
 routes.use('/users', usersRoutes);
 routes.use('/sessions', sessionsRoutes);
+
+routes.get('/me', ensureAuthenticated, (request, response) => {
+  return response.json({ user: request.user });
+});
