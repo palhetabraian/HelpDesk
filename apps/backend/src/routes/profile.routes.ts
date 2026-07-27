@@ -8,3 +8,4 @@ export const profileRoutes = Router();
 const profileController = new ProfileController();
 
 profileRoutes.get('/', ensureAuthenticated, profileController.show);
+profileRoutes.patch('/', ensureAuthenticated, profileController.update);
