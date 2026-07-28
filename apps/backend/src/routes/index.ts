@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { authRoutes } from './auth.routes';
 import { profileRoutes } from './profile.routes';
 import { sessionsRoutes } from './sessions.routes';
+import { techniciansRoutes } from './technicians.routes';
 import { usersRoutes } from './users.routes';
 
 export const routes = Router();
@@ -21,3 +22,4 @@ routes.use('/sessions', sessionsRoutes);
 // Rotas protegidas
 routes.use(authRoutes);
 routes.use('/profile', profileRoutes);
+routes.use('/technicians', techniciansRoutes);
