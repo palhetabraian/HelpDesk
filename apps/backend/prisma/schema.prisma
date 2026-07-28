@@ -27,6 +27,9 @@ model User {
   email String @unique //cria email unico
   password String //senha string
   role UserRole //define a role ADMIN | tecnico | Client
+  avatarURL String? //guarda a url do avatar
+  availableHours String[] @default([]) //guarda lista de horarios disponiveis
+  mustChangePassword Boolean @default(false) // indica se precisa trocar a senha apos o primeiro uso
   createdAt DateTime @default(now()) // quando foi criado
   updatedAt DateTime @updatedAt // ultima atualizacao
 
