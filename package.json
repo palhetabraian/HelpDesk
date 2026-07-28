@@ -10,5 +10,8 @@
     "npm": "10.8.2"
   },
   "packageManager": "npm@10.8.2",
-  "scripts": {}
+  "scripts": {},
+  "devDependencies": {
+    "@types/node": "^26.1.2"
+  }
 }
