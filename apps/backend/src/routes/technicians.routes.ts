@@ -31,3 +31,10 @@ techniciansRoutes.patch(
   ensureRole(['ADMIN']),
   techniciansController.update
 );
+
+techniciansRoutes.patch(
+  '/:id/available-hours',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  techniciansController.updateAvailableHours
+);

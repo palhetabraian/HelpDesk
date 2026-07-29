@@ -6,6 +6,7 @@ import { prisma } from '../infra/database/prisma';
 import {
   createTechnicianSchema,
   updateTechnicianSchema,
+  updateTechnicianAvailableHoursSchema,
 } from '../schemas/technicians.schemas';
 import { AppError } from '../shared/errors/AppError';
 
@@ -125,6 +126,43 @@ export class TechniciansController {
         id,
       },
       data,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        avatarURL: true,
+        availableHours: true,
+        mustChangePassword: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return response.json(updatedTechnician);
+  }
+
+  async updateAvailableHours(request: Request, response: Response) {
+    const { id } = request.params;
+    const data = updateTechnicianAvailableHoursSchema.parse(request.body);
+
+    const technician = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!technician || technician.role !== 'TECHNICIAN') {
+      throw new AppError('Técnico não encontrado.', 404);
+    }
+
+    const updatedTechnician = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        availableHours: data.availableHours,
+      },
       select: {
         id: true,
         name: true,
