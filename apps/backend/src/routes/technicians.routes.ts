@@ -10,6 +10,14 @@ export const techniciansRoutes = Router();
 const techniciansController = new TechniciansController();
 
 //rota protegida  somente Admin pode acessar
+
+techniciansRoutes.get(
+  '/',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  techniciansController.index
+);
+
 techniciansRoutes.post(
   '/',
   ensureAuthenticated,

@@ -20,6 +20,32 @@ const DEFAULT_TECHNICIAN_AVAILABLE_HOURS = [
 
 //class responsavel por criar um tecnico
 export class TechniciansController {
+  //listando conta de tecnicos
+  async index(request: Request, response: Response) {
+    const technicians = await prisma.user.findMany({
+      where: {
+        role: 'TECHNICIAN',
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        avatarURL: true,
+        availableHours: true,
+        mustChangePassword: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      //organiza em ordem asc
+      orderBy: {
+        name: 'asc',
+      },
+    });
+
+    return response.json(technicians);
+  }
+
   async create(request: Request, response: Response) {
     const data = createTechnicianSchema.parse(request.body); //analisa os dados vindo do body
 
