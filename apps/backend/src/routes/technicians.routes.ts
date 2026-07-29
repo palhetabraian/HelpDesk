@@ -24,3 +24,10 @@ techniciansRoutes.post(
   ensureRole(['ADMIN']),
   techniciansController.create
 );
+
+techniciansRoutes.patch(
+  '/:id',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  techniciansController.update
+);

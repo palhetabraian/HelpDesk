@@ -9,4 +9,10 @@ export const createTechnicianSchema = z.object({
   password: z.string().min(6),
 });
 
+export const updateTechnicianSchema = z.object({
+  name: z.string().min(3).optional(),
+  email: z.email().optional(),
+});
+
 export type CreateTechnicianInput = z.infer<typeof createTechnicianSchema>;
+export type UpdateTechnicianInput = z.infer<typeof updateTechnicianSchema>;

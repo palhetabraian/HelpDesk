@@ -3,7 +3,10 @@ import { Request, Response } from 'express';
 import { hash } from 'bcryptjs';
 
 import { prisma } from '../infra/database/prisma';
-import { createTechnicianSchema } from '../schemas/technicians.schemas';
+import {
+  createTechnicianSchema,
+  updateTechnicianSchema,
+} from '../schemas/technicians.schemas';
 import { AppError } from '../shared/errors/AppError';
 
 //horarios que os tecnicos vao estar disponiveis
@@ -87,5 +90,54 @@ export class TechniciansController {
     });
 
     return response.status(201).json(technician);
+  }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params; //recupera id
+    const data = updateTechnicianSchema.parse(request.body); // recuperando os dados do body
+
+    const technician = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    //validando o tecnico
+    if (!technician || technician.role !== 'TECHNICIAN') {
+      throw new AppError('Técnico não encontrado.', 404);
+    }
+
+    //pegando o email no banco de dados
+    if (data.email) {
+      const userWithSameEmail = await prisma.user.findUnique({
+        where: {
+          email: data.email,
+        },
+      });
+
+      if (userWithSameEmail && userWithSameEmail.id !== id) {
+        throw new AppError('Já existe um usuário com este e-mail.', 409);
+      }
+    }
+
+    const updatedTechnician = await prisma.user.update({
+      where: {
+        id,
+      },
+      data,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        avatarURL: true,
+        availableHours: true,
+        mustChangePassword: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return response.json(updatedTechnician);
   }
 }
