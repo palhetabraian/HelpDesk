@@ -1,12 +1,13 @@
 //Guarda a regra de negocios dos tecnicos
 import { Request, Response } from 'express';
-import { hash } from 'bcryptjs';
+import { compare, hash } from 'bcryptjs';
 
 import { prisma } from '../infra/database/prisma';
 import {
   createTechnicianSchema,
-  updateTechnicianSchema,
   updateTechnicianAvailableHoursSchema,
+  updateTechnicianPasswordSchema,
+  updateTechnicianSchema,
 } from '../schemas/technicians.schemas';
 import { AppError } from '../shared/errors/AppError';
 
@@ -177,5 +178,47 @@ export class TechniciansController {
     });
 
     return response.json(updatedTechnician);
+  }
+
+  //responsavel por atualizar a senha
+  async updatePassword(request: Request, response: Response) {
+    const data = updateTechnicianPasswordSchema.parse(request.body);
+
+    //recuperando tecnico do banco
+    const technician = await prisma.user.findUnique({
+      where: {
+        id: request.user!.id,
+      },
+    });
+
+    //verificando se tecnico existe
+    if (!technician || technician.role !== 'TECHNICIAN') {
+      throw new AppError('Técnico não encontrado.', 404);
+    }
+
+    //comparando senha enviada pelo body com senha existente no banco
+    const passwordMatched = await compare(
+      data.currentPassword,
+      technician.password
+    );
+
+    if (!passwordMatched) {
+      throw new AppError('Senha atual inválida.', 401);
+    }
+
+    //criptogrando senha nova
+    const passwordHash = await hash(data.newPassword, 8);
+
+    await prisma.user.update({
+      where: {
+        id: technician.id,
+      },
+      data: {
+        password: passwordHash,
+        mustChangePassword: false,
+      },
+    });
+
+    return response.status(204).send();
   }
 }

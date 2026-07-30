@@ -9,6 +9,14 @@ export const techniciansRoutes = Router();
 
 const techniciansController = new TechniciansController();
 
+//rota para alterar senha pos primeiro login
+techniciansRoutes.patch(
+  '/me/password',
+  ensureAuthenticated,
+  ensureRole(['TECHNICIAN']),
+  techniciansController.updatePassword
+);
+
 //rota protegida  somente Admin pode acessar
 
 techniciansRoutes.get(

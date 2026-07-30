@@ -23,8 +23,17 @@ export const updateTechnicianAvailableHoursSchema = z.object({
   availableHours: z.array(availableHoursSchema).min(1),
 });
 
+//schema para troca de senha
+export const updateTechnicianPasswordSchema = z.object({
+  currentPassword: z.string().min(1),
+  newPassword: z.string().min(6),
+});
+
 export type CreateTechnicianInput = z.infer<typeof createTechnicianSchema>;
 export type UpdateTechnicianInput = z.infer<typeof updateTechnicianSchema>;
 export type updateTechnicianAvailableHoursInput = z.infer<
   typeof updateTechnicianAvailableHoursSchema
+>;
+export type updateTechnicianPasswordInput = z.infer<
+  typeof updateTechnicianPasswordSchema
 >;
