@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 
 import { prisma } from '../infra/database/prisma';
-import { createServiceSchema } from '../schemas/services.schema';
+import {
+  createServiceSchema,
+  updateServiceSchema,
+} from '../schemas/services.schema';
 
 export class ServicesController {
   async index(request: Request, response: Response) {
@@ -47,5 +50,39 @@ export class ServicesController {
     });
 
     return response.status(201).json(service);
+  }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const data = updateServiceSchema.parse(request.body);
+
+    const service = await prisma.service.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!service) {
+      return response.status(404).json({
+        message: 'Serviço não encontrado.',
+      });
+    }
+
+    const updatedService = await prisma.service.update({
+      where: {
+        id,
+      },
+      data,
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        price: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+    return response.json(updatedService);
   }
 }

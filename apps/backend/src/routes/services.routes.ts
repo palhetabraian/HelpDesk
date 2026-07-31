@@ -16,3 +16,10 @@ servicesRoutes.post(
   ensureRole(['ADMIN']),
   servicesController.create
 );
+
+servicesRoutes.patch(
+  '/:id',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  servicesController.update
+);
