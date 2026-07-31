@@ -23,3 +23,10 @@ servicesRoutes.patch(
   ensureRole(['ADMIN']),
   servicesController.update
 );
+
+servicesRoutes.patch(
+  '/:id/deactivate',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  servicesController.deactivate
+);

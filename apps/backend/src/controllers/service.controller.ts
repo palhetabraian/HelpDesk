@@ -5,12 +5,13 @@ import {
   createServiceSchema,
   updateServiceSchema,
 } from '../schemas/services.schema';
+import { AppError } from '../shared/errors/AppError';
 
 export class ServicesController {
   async index(request: Request, response: Response) {
     const services = await prisma.service.findMany({
       where: {
-        isActive: true, //buscando por serviços que esteja ativo
+        isActive: true,
       },
       select: {
         id: true,
@@ -63,9 +64,7 @@ export class ServicesController {
     });
 
     if (!service) {
-      return response.status(404).json({
-        message: 'Serviço não encontrado.',
-      });
+      throw new AppError('Serviço não encontrado.', 404);
     }
 
     const updatedService = await prisma.service.update({
@@ -83,6 +82,41 @@ export class ServicesController {
         updatedAt: true,
       },
     });
+
     return response.json(updatedService);
+  }
+
+  async deactivate(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const service = await prisma.service.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!service) {
+      throw new AppError('Serviço não encontrado.', 404);
+    }
+
+    const deactivatedService = await prisma.service.update({
+      where: {
+        id,
+      },
+      data: {
+        isActive: false,
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        price: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return response.json(deactivatedService);
   }
 }
