@@ -1,13 +1,18 @@
 //rotas de tecnicos.
 import { Router } from 'express';
 
+import multer from 'multer';
+
 import { TechniciansController } from '../controllers/technicians.controller';
 import { ensureAuthenticated } from '../shared/middlewares/ensure-authenticated';
 import { ensureRole } from '../shared/middlewares/ensure-role';
 
+import { uploadConfig } from '../configs/upload';
+
 export const techniciansRoutes = Router();
 
 const techniciansController = new TechniciansController();
+const upload = multer(uploadConfig.MULTER);
 
 //rota para alterar senha pos primeiro login
 techniciansRoutes.patch(
@@ -45,4 +50,12 @@ techniciansRoutes.patch(
   ensureAuthenticated,
   ensureRole(['ADMIN']),
   techniciansController.updateAvailableHours
+);
+
+techniciansRoutes.patch(
+  '/me/avatar',
+  ensureAuthenticated,
+  ensureRole(['TECHNICIAN']),
+  upload.single('avatar'),
+  techniciansController.updateAvatar
 );
