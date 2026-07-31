@@ -6,6 +6,7 @@ import { sessionsRoutes } from './sessions.routes';
 import { techniciansRoutes } from './technicians.routes';
 import { usersRoutes } from './users.routes';
 import { servicesRoutes } from './services.routes';
+import { clientsRoutes } from './client.routes';
 
 export const routes = Router();
 // rota para testar se ta funcionando a api
@@ -25,3 +26,4 @@ routes.use(authRoutes);
 routes.use('/profile', profileRoutes);
 routes.use('/technicians', techniciansRoutes);
 routes.use('/services', servicesRoutes);
+routes.use('/clients', clientsRoutes);
