@@ -14,3 +14,10 @@ clientsRoutes.get(
   ensureRole(['ADMIN']),
   clientsController.index
 );
+
+clientsRoutes.patch(
+  '/:id',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  clientsController.update
+);

@@ -14,7 +14,12 @@ export const updateProfileSchema = z.object({
   email: z.email().optional(),
 });
 
+export const updateClientSchema = z.object({
+  name: z.string().min(3).optional(),
+  email: z.email().optional(),
+});
+
 //passando como tipagem
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
-
+export type UpdateClientInput = z.infer<typeof updateClientSchema>;
