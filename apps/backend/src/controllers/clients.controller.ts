@@ -149,4 +149,26 @@ export class ClientsController {
       throw error;
     }
   }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const client = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!client || client.role !== 'CLIENT') {
+      throw new AppError('Cliente não encontrado.', 404);
+    }
+
+    await prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+
+    return response.status(204).send();
+  }
 }

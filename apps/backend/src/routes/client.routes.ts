@@ -33,3 +33,10 @@ clientsRoutes.patch(
   upload.single('avatar'),
   clientsController.updateAvatar
 );
+
+clientsRoutes.delete(
+  '/:id',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  clientsController.delete
+);
