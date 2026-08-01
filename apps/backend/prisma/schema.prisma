@@ -20,6 +20,12 @@ enum UserRole {
   CLIENT
 }
 
+enum TicketStatus {
+  ABERTO
+  EM_ATENDIMENTO
+  ENCERRADO
+}
+
 //Tabela USER
 model User {
   id String @id @default(uuid()) // cria ids unicos em formato de UUID,
@@ -32,6 +38,9 @@ model User {
   mustChangePassword Boolean @default(false) // indica se precisa trocar a senha apos o primeiro uso
   createdAt DateTime @default(now()) // quando foi criado
   updatedAt DateTime @updatedAt // ultima atualizacao
+
+  clientTickets Ticket[] @relation("ClientTickets")
+  technicianTickets Ticket[] @relation("TechnicianTickets")
 
   @@map("users") // define o nome da tabela
 }
@@ -46,5 +55,44 @@ model Service {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  ticketServices TicketService[]
+
   @@map("services")
+}
+
+model Ticket {
+  id String @id @default(uuid())
+  description String
+  status TicketStatus @default(ABERTO)
+
+  clientId String
+  technicianId String
+
+  client User @relation("ClientTickets", fields: [clientId], references: [id], onDelete: Cascade)
+  technician User @relation("TechnicianTickets", fields: [technicianId], references: [id])
+
+  services TicketService[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tickets")
+
+}
+
+model TicketService {
+  id String @id @default(uuid())
+
+  ticketId String
+  serviceId String
+
+  price Decimal @db.Decimal(10,2)
+
+  tticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([ticketId, serviceId])
+  @@map("ticket_services")
 }
