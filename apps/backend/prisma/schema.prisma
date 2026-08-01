@@ -88,7 +88,7 @@ model TicketService {
 
   price Decimal @db.Decimal(10,2)
 
-  tticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
   service Service @relation(fields: [serviceId], references: [id])
 
   createdAt DateTime @default(now())
