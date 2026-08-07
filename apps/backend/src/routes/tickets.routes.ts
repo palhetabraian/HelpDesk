@@ -14,3 +14,10 @@ ticketsRoutes.post(
   ensureRole(['CLIENT']),
   ticketsController.create
 );
+
+ticketsRoutes.get(
+  '/me',
+  ensureAuthenticated,
+  ensureRole(['CLIENT']),
+  ticketsController.indexByClient
+);
