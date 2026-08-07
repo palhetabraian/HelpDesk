@@ -28,3 +28,10 @@ ticketsRoutes.get(
   ensureRole(['TECHNICIAN']),
   ticketsController.indexByTechnician
 );
+
+ticketsRoutes.get(
+  '/',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  ticketsController.index
+);

@@ -148,4 +148,46 @@ export class TicketsController {
 
     return response.json(tickets);
   }
+
+  async index(request: Request, response: Response) {
+    const tickets = await prisma.ticket.findMany({
+      include: {
+        client: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatarURL: true,
+          },
+        },
+        technician: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            availableHours: true,
+            avatarURL: true,
+          },
+        },
+        services: {
+          include: {
+            service: {
+              select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+                isActive: true,
+              },
+            },
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return response.json(tickets);
+  }
 }
