@@ -21,3 +21,10 @@ ticketsRoutes.get(
   ensureRole(['CLIENT']),
   ticketsController.indexByClient
 );
+
+ticketsRoutes.get(
+  '/technician',
+  ensureAuthenticated,
+  ensureRole(['TECHNICIAN']),
+  ticketsController.indexByTechnician
+);
