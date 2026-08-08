@@ -14,3 +14,38 @@ ticketsRoutes.post(
   ensureRole(['CLIENT']),
   ticketsController.create
 );
+
+ticketsRoutes.get(
+  '/me',
+  ensureAuthenticated,
+  ensureRole(['CLIENT']),
+  ticketsController.indexByClient
+);
+
+ticketsRoutes.get(
+  '/technician',
+  ensureAuthenticated,
+  ensureRole(['TECHNICIAN']),
+  ticketsController.indexByTechnician
+);
+
+ticketsRoutes.get(
+  '/',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  ticketsController.index
+);
+
+ticketsRoutes.post(
+  '/:id/services',
+  ensureAuthenticated,
+  ensureRole(['TECHNICIAN']),
+  ticketsController.addService
+);
+
+ticketsRoutes.patch(
+  '/:id/status',
+  ensureAuthenticated,
+  ensureRole(['ADMIN', 'TECHNICIAN']),
+  ticketsController.updateStatus
+);
