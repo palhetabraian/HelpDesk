@@ -21,3 +21,10 @@ adminsRoutes.post(
   ensureRole(['ADMIN']),
   adminsController.create
 );
+
+adminsRoutes.patch(
+  '/:id',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  adminsController.update
+);

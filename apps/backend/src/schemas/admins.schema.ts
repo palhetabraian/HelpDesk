@@ -10,3 +10,7 @@ export const createAdminSchema = z.object({
     .string()
     .min(6, 'A senha deve ter pelo menos 6 caracteres.'),
 });
+
+export const updateAdminSchema = createAdminSchema.omit({
+  password: true,
+});

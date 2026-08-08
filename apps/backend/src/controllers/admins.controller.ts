@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { hash } from 'bcryptjs';
 
 import { prisma } from '../infra/database/prisma';
-import { createAdminSchema } from '../schemas/admins.schema';
+import { createAdminSchema, updateAdminSchema } from '../schemas/admins.schema';
 import { AppError } from '../shared/errors/AppError';
 
 export class AdminsController {
@@ -60,5 +60,53 @@ export class AdminsController {
     });
 
     return response.status(201).json(admin);
+  }
+
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const data = updateAdminSchema.parse(request.body);
+
+    const admin = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!admin || admin.role !== 'ADMIN') {
+      throw new AppError('Administrador nao encontrado.', 404);
+    }
+
+    const userWithSameEmail = await prisma.user.findFirst({
+      where: {
+        email: data.email,
+        NOT: {
+          id,
+        },
+      },
+    });
+
+    if (userWithSameEmail) {
+      throw new AppError('Ja existe um usuario com este e-mail.', 409);
+    }
+
+    const updatedAdmin = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name: data.name,
+        email: data.email,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    return response.json(updatedAdmin);
   }
 }
