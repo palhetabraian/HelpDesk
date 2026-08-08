@@ -28,3 +28,10 @@ adminsRoutes.patch(
   ensureRole(['ADMIN']),
   adminsController.update
 );
+
+adminsRoutes.delete(
+  '/:id',
+  ensureAuthenticated,
+  ensureRole(['ADMIN']),
+  adminsController.delete
+);

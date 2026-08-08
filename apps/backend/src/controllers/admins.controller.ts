@@ -109,4 +109,26 @@ export class AdminsController {
 
     return response.json(updatedAdmin);
   }
+
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+
+    const admin = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!admin || admin.role !== 'ADMIN') {
+      throw new AppError('Administrador nao encontrado.', 404);
+    }
+
+    await prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+
+    return response.status(204).send();
+  }
 }
