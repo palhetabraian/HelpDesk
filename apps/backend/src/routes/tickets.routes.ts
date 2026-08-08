@@ -42,3 +42,10 @@ ticketsRoutes.post(
   ensureRole(['TECHNICIAN']),
   ticketsController.addService
 );
+
+ticketsRoutes.patch(
+  '/:id/status',
+  ensureAuthenticated,
+  ensureRole(['ADMIN', 'TECHNICIAN']),
+  ticketsController.updateStatus
+);

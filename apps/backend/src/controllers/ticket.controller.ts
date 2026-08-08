@@ -4,6 +4,7 @@ import { prisma } from '../infra/database/prisma';
 import {
   addTicketServiceSchema,
   createTicketSchema,
+  updateTicketStatusSchema,
 } from '../schemas/ticket.schema';
 import { AppError } from '../shared/errors/AppError';
 
@@ -244,6 +245,71 @@ export class TicketsController {
     const updatedTicket = await prisma.ticket.findUnique({
       where: {
         id: ticket.id,
+      },
+      include: {
+        client: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            avatarURL: true,
+          },
+        },
+        technician: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            availableHours: true,
+            avatarURL: true,
+          },
+        },
+        services: {
+          include: {
+            service: {
+              select: {
+                id: true,
+                name: true,
+                description: true,
+                price: true,
+                isActive: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return response.json(updatedTicket);
+  }
+
+  async updateStatus(request: Request, response: Response) {
+    const { id } = request.params;
+    const data = updateTicketStatusSchema.parse(request.body);
+
+    const ticket = await prisma.ticket.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!ticket) {
+      throw new AppError('Chamado nao encontrado.', 404);
+    }
+
+    if (
+      request.user!.role === 'TECHNICIAN' &&
+      ticket.technicianId !== request.user!.id
+    ) {
+      throw new AppError('Voce nao pode alterar este chamado.', 403);
+    }
+
+    const updatedTicket = await prisma.ticket.update({
+      where: {
+        id,
+      },
+      data: {
+        status: data.status,
       },
       include: {
         client: {
