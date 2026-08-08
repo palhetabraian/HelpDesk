@@ -2,12 +2,33 @@ import { Request, Response } from 'express';
 import { hash } from 'bcryptjs';
 
 import { prisma } from '../infra/database/prisma';
-import { createUserSchema } from '../schemas/users.schemas';
+import { createAdminSchema } from '../schemas/admins.schema';
 import { AppError } from '../shared/errors/AppError';
 
-export class UsersController {
+export class AdminsController {
+  async index(request: Request, response: Response) {
+    const admins = await prisma.user.findMany({
+      where: {
+        role: 'ADMIN',
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return response.json(admins);
+  }
+
   async create(request: Request, response: Response) {
-    const data = createUserSchema.parse(request.body);
+    const data = createAdminSchema.parse(request.body);
 
     const userWithSameEmail = await prisma.user.findUnique({
       where: {
@@ -21,12 +42,12 @@ export class UsersController {
 
     const passwordHash = await hash(data.password, 8);
 
-    const user = await prisma.user.create({
+    const admin = await prisma.user.create({
       data: {
         name: data.name,
         email: data.email,
         password: passwordHash,
-        role: 'CLIENT',
+        role: 'ADMIN',
       },
       select: {
         id: true,
@@ -38,6 +59,6 @@ export class UsersController {
       },
     });
 
-    return response.status(201).json(user);
+    return response.status(201).json(admin);
   }
 }

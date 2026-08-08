@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { authRoutes } from './auth.routes';
+import { adminsRoutes } from './admins.routes';
 import { profileRoutes } from './profile.routes';
 import { sessionsRoutes } from './sessions.routes';
 import { techniciansRoutes } from './technicians.routes';
@@ -24,6 +25,7 @@ routes.use('/sessions', sessionsRoutes);
 
 // Rotas protegidas
 routes.use(authRoutes);
+routes.use('/admins', adminsRoutes);
 routes.use('/profile', profileRoutes);
 routes.use('/technicians', techniciansRoutes);
 routes.use('/services', servicesRoutes);
