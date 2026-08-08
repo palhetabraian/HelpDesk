@@ -6,5 +6,10 @@ export const createTicketSchema = z.object({
   serviceId: z.string().uuid(),
 });
 
+export const addTicketServiceSchema = z.object({
+  serviceId: z.string().uuid(),
+});
+
 export type CreateTicketInput = z.infer<typeof createTicketSchema>;
+export type AddTicketServiceInput = z.infer<typeof addTicketServiceSchema>;
 

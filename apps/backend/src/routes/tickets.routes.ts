@@ -35,3 +35,10 @@ ticketsRoutes.get(
   ensureRole(['ADMIN']),
   ticketsController.index
 );
+
+ticketsRoutes.post(
+  '/:id/services',
+  ensureAuthenticated,
+  ensureRole(['TECHNICIAN']),
+  ticketsController.addService
+);
