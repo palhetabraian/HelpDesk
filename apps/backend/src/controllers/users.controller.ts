@@ -6,21 +6,6 @@ import { createUserSchema } from '../schemas/users.schemas';
 import { AppError } from '../shared/errors/AppError';
 
 export class UsersController {
-  async index(request: Request, response: Response) {
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        role: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
-
-    return response.json(users);
-  }
-
   async create(request: Request, response: Response) {
     const data = createUserSchema.parse(request.body);
 
