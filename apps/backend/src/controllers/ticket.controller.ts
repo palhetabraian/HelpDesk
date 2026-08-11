@@ -8,6 +8,21 @@ import {
 } from '../schemas/ticket.schema';
 import { AppError } from '../shared/errors/AppError';
 
+const ticketServiceSelect = {
+  id: true,
+  price: true,
+  createdAt: true,
+  service: {
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      price: true,
+      isActive: true,
+    },
+  },
+};
+
 export class TicketsController {
   async create(request: Request, response: Response) {
     const data = createTicketSchema.parse(request.body);
@@ -86,27 +101,23 @@ export class TicketsController {
       where: {
         clientId: request.user!.id,
       },
-      include: {
+      select: {
+        id: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
         technician: {
           select: {
             id: true,
             name: true,
             email: true,
+            avatarURL: true,
             availableHours: true,
           },
         },
         services: {
-          include: {
-            service: {
-              select: {
-                id: true,
-                name: true,
-                description: true,
-                price: true,
-                isActive: true,
-              },
-            },
-          },
+          select: ticketServiceSelect,
         },
       },
       orderBy: {
@@ -122,7 +133,12 @@ export class TicketsController {
       where: {
         technicianId: request.user!.id,
       },
-      include: {
+      select: {
+        id: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
         client: {
           select: {
             id: true,
@@ -132,17 +148,7 @@ export class TicketsController {
           },
         },
         services: {
-          include: {
-            service: {
-              select: {
-                id: true,
-                name: true,
-                description: true,
-                price: true,
-                isActive: true,
-              },
-            },
-          },
+          select: ticketServiceSelect,
         },
       },
       orderBy: {
@@ -155,7 +161,12 @@ export class TicketsController {
 
   async index(request: Request, response: Response) {
     const tickets = await prisma.ticket.findMany({
-      include: {
+      select: {
+        id: true,
+        description: true,
+        status: true,
+        createdAt: true,
+        updatedAt: true,
         client: {
           select: {
             id: true,
@@ -174,17 +185,7 @@ export class TicketsController {
           },
         },
         services: {
-          include: {
-            service: {
-              select: {
-                id: true,
-                name: true,
-                description: true,
-                price: true,
-                isActive: true,
-              },
-            },
-          },
+          select: ticketServiceSelect,
         },
       },
       orderBy: {
