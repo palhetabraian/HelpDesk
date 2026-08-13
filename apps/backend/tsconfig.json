@@ -11,8 +11,8 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node", "jest"]
   },
-  "include": ["src", "prisma"],
+  "include": ["src", "prisma", "tests"],
   "exclude": ["node_modules", "dist"]
 }

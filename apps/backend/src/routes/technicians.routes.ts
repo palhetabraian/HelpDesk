@@ -6,6 +6,7 @@ import multer from 'multer';
 import { TechniciansController } from '../controllers/technicians.controller';
 import { ensureAuthenticated } from '../shared/middlewares/ensure-authenticated';
 import { ensureRole } from '../shared/middlewares/ensure-role';
+import { ensureTechnicianPasswordChanged } from '../shared/middlewares/ensure-technician-password-changed';
 
 import { uploadConfig } from '../configs/upload';
 
@@ -56,6 +57,7 @@ techniciansRoutes.patch(
   '/me/avatar',
   ensureAuthenticated,
   ensureRole(['TECHNICIAN']),
+  ensureTechnicianPasswordChanged,
   upload.single('avatar'),
   techniciansController.updateAvatar
 );

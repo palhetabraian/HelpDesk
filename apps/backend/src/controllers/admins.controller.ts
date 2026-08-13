@@ -63,7 +63,7 @@ export class AdminsController {
   }
 
   async update(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
     const data = updateAdminSchema.parse(request.body);
 
     const admin = await prisma.user.findUnique({
@@ -111,7 +111,7 @@ export class AdminsController {
   }
 
   async delete(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
 
     const admin = await prisma.user.findUnique({
       where: {
@@ -132,3 +132,4 @@ export class AdminsController {
     return response.status(204).send();
   }
 }
+
