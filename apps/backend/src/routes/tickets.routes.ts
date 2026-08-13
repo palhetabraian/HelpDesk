@@ -3,6 +3,7 @@ import { Router } from 'express';
 import { TicketsController } from '../controllers/ticket.controller';
 import { ensureAuthenticated } from '../shared/middlewares/ensure-authenticated';
 import { ensureRole } from '../shared/middlewares/ensure-role';
+import { ensureTechnicianPasswordChanged } from '../shared/middlewares/ensure-technician-password-changed';
 
 export const ticketsRoutes = Router();
 
@@ -26,6 +27,7 @@ ticketsRoutes.get(
   '/technician',
   ensureAuthenticated,
   ensureRole(['TECHNICIAN']),
+  ensureTechnicianPasswordChanged,
   ticketsController.indexByTechnician
 );
 
@@ -40,6 +42,7 @@ ticketsRoutes.post(
   '/:id/services',
   ensureAuthenticated,
   ensureRole(['TECHNICIAN']),
+  ensureTechnicianPasswordChanged,
   ticketsController.addService
 );
 
@@ -47,5 +50,6 @@ ticketsRoutes.patch(
   '/:id/status',
   ensureAuthenticated,
   ensureRole(['ADMIN', 'TECHNICIAN']),
+  ensureTechnicianPasswordChanged,
   ticketsController.updateStatus
 );
