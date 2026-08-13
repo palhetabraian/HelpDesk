@@ -98,7 +98,7 @@ export class TechniciansController {
   }
 
   async update(request: Request, response: Response) {
-    const { id } = request.params; //recupera id
+    const id = String(request.params.id); //recupera id
     const data = updateTechnicianSchema.parse(request.body); // recuperando os dados do body
 
     const technician = await prisma.user.findUnique({
@@ -147,7 +147,7 @@ export class TechniciansController {
   }
 
   async updateAvailableHours(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
     const data = updateTechnicianAvailableHoursSchema.parse(request.body);
 
     const technician = await prisma.user.findUnique({
@@ -295,3 +295,4 @@ export class TechniciansController {
     }
   }
 }
+

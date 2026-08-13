@@ -197,7 +197,7 @@ export class TicketsController {
   }
 
   async addService(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
     const data = addTicketServiceSchema.parse(request.body);
 
     const ticket = await prisma.ticket.findUnique({
@@ -285,7 +285,7 @@ export class TicketsController {
   }
 
   async updateStatus(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
     const data = updateTicketStatusSchema.parse(request.body);
 
     const ticket = await prisma.ticket.findUnique({
@@ -349,3 +349,4 @@ export class TicketsController {
     return response.json(updatedTicket);
   }
 }
+

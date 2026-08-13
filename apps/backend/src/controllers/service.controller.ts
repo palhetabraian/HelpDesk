@@ -54,7 +54,7 @@ export class ServicesController {
   }
 
   async update(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
     const data = updateServiceSchema.parse(request.body);
 
     const service = await prisma.service.findUnique({
@@ -87,7 +87,7 @@ export class ServicesController {
   }
 
   async deactivate(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
 
     const service = await prisma.service.findUnique({
       where: {
@@ -120,3 +120,4 @@ export class ServicesController {
     return response.json(deactivatedService);
   }
 }
+

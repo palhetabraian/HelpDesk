@@ -35,7 +35,7 @@ export class ClientsController {
   }
 
   async update(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
     const data = updateClientSchema.parse(request.body);
 
     const client = await prisma.user.findUnique({
@@ -151,7 +151,7 @@ export class ClientsController {
   }
 
   async delete(request: Request, response: Response) {
-    const { id } = request.params;
+    const id = String(request.params.id);
 
     const client = await prisma.user.findUnique({
       where: {
@@ -172,3 +172,4 @@ export class ClientsController {
     return response.status(204).send();
   }
 }
+
