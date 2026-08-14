@@ -88,14 +88,6 @@ export function TicketsListPage() {
       <div>
         <h1 className="text-2xl font-bold text-blue-700">Chamados</h1>
 
-        <p className="mt-2 text-sm text-slate-600">
-          Lista de chamados do sistema.
-        </p>
-
-        <p className="mt-4 text-sm font-medium text-slate-700">
-          {adminTickets.length} chamados encontrados.
-        </p>
-
         <section className="mt-6 hidden overflow-hidden rounded-xl border border-slate-200 bg-white lg:block">
           <table className="w-full border-collapse text-left">
             <thead className="border-b border-slate-200 bg-slate-50">
