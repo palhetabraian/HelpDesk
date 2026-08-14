@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import { TicketDetailsPage } from '../pages/admin/ticket-details'
 import { TicketsListPage } from '../pages/admin/tickets-list'
 import { LoginPage } from '../pages/auth/login'
 import { RegisterPage } from '../pages/auth/register'
@@ -12,6 +13,7 @@ export function AppRoutes() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/admin/tickets" element={<TicketsListPage />} />
+        <Route path="/admin/tickets/:ticketId" element={<TicketDetailsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
