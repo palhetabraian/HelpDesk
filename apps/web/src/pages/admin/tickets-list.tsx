@@ -198,7 +198,11 @@ export function TicketsListPage() {
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <strong className="block text-sm font-semibold text-slate-900">
+                  <span className="text-xs font-bold text-blue-700">
+                    #{ticket.id}
+                  </span>
+
+                  <strong className="mt-2 block text-sm font-semibold text-slate-900">
                     {ticket.title}
                   </strong>
 
@@ -207,7 +211,31 @@ export function TicketsListPage() {
                   </span>
                 </div>
 
-                <TicketStatusBadge status={ticket.status} />
+                <div className="flex flex-col items-end gap-2">
+                  <TicketStatusBadge status={ticket.status} />
+
+                  <strong className="text-sm font-semibold text-slate-900">
+                    {currencyFormatter.format(ticket.totalValue)}
+                  </strong>
+                </div>
+              </div>
+
+              <div className="mt-4 grid gap-3 border-t border-slate-100 pt-4">
+                <div className="flex items-center gap-2 text-sm text-slate-700">
+                  <span className="flex size-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
+                    {getInitials(ticket.client)}
+                  </span>
+
+                  <span>Cliente: {ticket.client}</span>
+                </div>
+
+                <div className="flex items-center gap-2 text-sm text-slate-700">
+                  <span className="flex size-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
+                    {getInitials(ticket.technician)}
+                  </span>
+
+                  <span>Técnico: {ticket.technician}</span>
+                </div>
               </div>
 
               <div className="mt-4 flex items-center justify-between">
