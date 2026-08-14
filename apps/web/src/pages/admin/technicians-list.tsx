@@ -50,32 +50,35 @@ export function TechniciansListPage() {
     <AdminLayout>
       <div>
         <div className="flex items-center justify-between gap-4">
-          <h1 className="text-2xl font-bold text-blue-700">Técnicos</h1>
+          <h1 className="text-xl font-bold text-blue-700 lg:text-2xl">
+            Técnicos
+          </h1>
 
           <button
             type="button"
-            className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-zinc-900 px-4 text-sm font-semibold text-white transition hover:bg-zinc-800 lg:px-5"
+            aria-label="Cadastrar novo técnico"
+            className="flex size-10 cursor-pointer items-center justify-center rounded-md bg-zinc-900 text-white transition hover:bg-zinc-800 lg:h-10 lg:w-auto lg:gap-2 lg:px-5 lg:text-sm lg:font-semibold"
           >
-            <Plus size={16} strokeWidth={2.4} />
+            <Plus size={18} strokeWidth={2.4} />
             <span className="hidden lg:inline">Novo</span>
           </button>
         </div>
 
-        <section className="mt-6 hidden overflow-hidden rounded-xl border border-slate-200 bg-white lg:block">
+        <section className="mt-6 hidden max-w-[1120px] overflow-hidden rounded-xl border border-slate-200 bg-white lg:block">
           <table className="w-full border-collapse text-left">
             <thead className="border-b border-slate-200 bg-slate-50">
               <tr>
-                <th className="px-4 py-3 text-[11px] font-bold text-slate-500">
+                <th className="w-[36%] px-4 py-3 text-[11px] font-bold text-slate-500">
                   Nome
                 </th>
-                <th className="px-4 py-3 text-[11px] font-bold text-slate-500">
+                <th className="w-[30%] px-4 py-3 text-[11px] font-bold text-slate-500">
                   E-mail
                 </th>
                 <th className="px-4 py-3 text-[11px] font-bold text-slate-500">
                   Disponibilidade
                 </th>
-                <th className="px-4 py-3 text-right text-[11px] font-bold text-slate-500">
-                  Ação
+                <th className="w-16 px-4 py-3 text-right text-[11px] font-bold text-slate-500">
+                  <span className="sr-only">Ação</span>
                 </th>
               </tr>
             </thead>
@@ -84,7 +87,7 @@ export function TechniciansListPage() {
               {technicians.map((technician) => (
                 <tr
                   key={technician.id}
-                  className="transition hover:bg-slate-50"
+                  className="h-[72px] transition hover:bg-slate-50"
                 >
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
@@ -107,7 +110,7 @@ export function TechniciansListPage() {
                       {technician.availability.map((time) => (
                         <span
                           key={time}
-                          className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500"
+                          className="flex h-7 items-center rounded-full border border-slate-200 px-3 text-xs font-semibold text-slate-500"
                         >
                           {time}
                         </span>
@@ -131,7 +134,7 @@ export function TechniciansListPage() {
         </section>
 
         <section className="mt-6 overflow-hidden rounded-xl border border-slate-200 bg-white lg:hidden">
-          <div className="grid grid-cols-[1fr_1fr_40px] border-b border-slate-200 bg-slate-50 px-4 py-3">
+          <div className="grid grid-cols-[1fr_126px_36px] items-center border-b border-slate-200 bg-slate-50 px-4 py-4">
             <span className="text-[11px] font-bold text-slate-500">Nome</span>
             <span className="text-[11px] font-bold text-slate-500">
               Disponibilidade
@@ -147,7 +150,7 @@ export function TechniciansListPage() {
               return (
                 <article
                   key={technician.id}
-                  className="grid grid-cols-[1fr_1fr_40px] items-center gap-3 px-4 py-4"
+                  className="grid min-h-[72px] grid-cols-[1fr_126px_36px] items-center gap-3 px-4 py-4"
                 >
                   <div className="flex min-w-0 items-center gap-3">
                     <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">
@@ -160,12 +163,12 @@ export function TechniciansListPage() {
                   </div>
 
                   <div className="flex min-w-0 items-center gap-2">
-                    <span className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500">
+                    <span className="flex h-7 items-center rounded-full border border-slate-200 px-3 text-xs font-semibold text-slate-500">
                       {firstAvailability}
                     </span>
 
                     {remainingAvailability.length > 0 && (
-                      <span className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-500">
+                      <span className="flex h-7 items-center rounded-full border border-slate-200 px-3 text-xs font-semibold text-slate-500">
                         +{remainingAvailability.length}
                       </span>
                     )}
