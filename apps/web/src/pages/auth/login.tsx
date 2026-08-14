@@ -6,25 +6,26 @@ import { Button } from '../../components/ui/button'
 
 export function LoginPage() {
   return (
-    <main className="min-h-screen bg-slate-50 lg:grid lg:h-screen lg:grid-cols-2 lg:overflow-hidden">
+    <main className="min-h-dvh bg-slate-50 lg:grid lg:h-screen lg:grid-cols-2 lg:overflow-hidden">
       <div className="auth-hero hidden min-h-screen lg:block" />
 
-      <section className="relative min-h-screen overflow-hidden rounded-t-[2rem] bg-slate-50 px-6 pb-16 pt-20 sm:px-10 lg:flex lg:h-screen lg:min-h-0 lg:items-center lg:rounded-l-[2rem] lg:rounded-t-none lg:px-20 lg:py-10">
-        <div className="auth-hero absolute inset-x-0 top-0 h-24 rounded-b-[2rem] lg:hidden" />
+      <section className="relative min-h-dvh overflow-hidden bg-slate-50 lg:flex lg:h-screen lg:min-h-0 lg:items-center lg:rounded-l-[2rem] lg:px-20 lg:py-10">
+        <div className="auth-hero absolute inset-x-0 top-0 h-24 lg:hidden" />
 
-        <div className="relative mx-auto flex w-full max-w-[35rem] flex-col">
+        <div className="relative mt-10 min-h-[calc(100dvh-2.5rem)] rounded-t-[2rem] bg-slate-50 px-6 pb-12 pt-7 sm:px-10 lg:mt-0 lg:min-h-0 lg:w-full lg:rounded-none lg:bg-transparent lg:p-0">
+          <div className="mx-auto flex w-full max-w-[35rem] flex-col">
           <img
             src={logoHelpDesk}
             alt="HelpDesk"
-            className="mx-auto mb-16 h-auto w-56 lg:mb-10"
+            className="mx-auto mb-8 h-auto w-40 sm:w-44 lg:mb-10 lg:w-56"
           />
 
-          <form className="rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 sm:px-12 sm:py-12">
-            <h1 className="text-4xl font-bold tracking-[-0.03em] text-zinc-900">
+          <form className="rounded-2xl border border-slate-200 bg-slate-50 px-6 py-7 sm:px-12 sm:py-12">
+            <h1 className="text-3xl font-bold tracking-[-0.03em] text-zinc-900 sm:text-4xl">
               Acesse o portal
             </h1>
 
-            <p className="mt-3 text-xl text-slate-600">
+            <p className="mt-3 text-base text-slate-600 sm:text-xl">
               Entre usando seu e-mail e senha cadastrados
             </p>
 
@@ -50,7 +51,7 @@ export function LoginPage() {
           </form>
 
           <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 sm:px-12">
-            <h2 className="text-2xl font-bold tracking-[-0.03em] text-zinc-900">
+            <h2 className="text-xl font-bold tracking-[-0.03em] text-zinc-900 sm:text-2xl">
               Ainda não tem uma conta?
             </h2>
 
@@ -65,6 +66,7 @@ export function LoginPage() {
               Criar conta
             </Link>
           </div>
+        </div>
         </div>
       </section>
     </main>
