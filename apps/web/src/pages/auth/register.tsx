@@ -58,14 +58,14 @@ export function RegisterPage() {
 
           <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 sm:px-12">
             <h2 className="text-2xl font-bold tracking-[-0.03em] text-zinc-900">
-              Já uma conta?
+              Já tem uma conta?
             </h2>
 
             <p className="mt-2 text-base text-slate-600">Entre agora mesmo</p>
 
             <Link
               to="/"
-              className="mt-8 flex h-14 w-full items-center justify-center rounded-lg bg-zinc-200 px-4 text-base font-semibold text-zinc-900 transition hover:bg-zinc-300 focus:ring-2 focus:ring-zinc-100 focus:outline-none"
+              className="mt-8 flex h-14 w-full cursor-pointer items-center justify-center rounded-lg bg-zinc-200 px-4 text-base font-semibold text-zinc-900 transition hover:bg-zinc-300 focus:ring-2 focus:ring-zinc-100 focus:outline-none"
             >
               Acessar conta
             </Link>

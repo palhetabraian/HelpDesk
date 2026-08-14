@@ -1,28 +1,71 @@
+import { Link } from 'react-router-dom'
+
+import logoHelpDesk from '../../assets/Logo-HelpDesk.svg'
+import { Input } from '../../components/forms/input'
 import { Button } from '../../components/ui/button'
-import { env } from '../../configs/env'
 
 export function LoginPage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-6 py-10">
-      <section className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-        <span className="text-sm font-medium text-blue-600">
-          HelpDesk Web
-        </span>
+    <main className="min-h-screen bg-slate-50 lg:grid lg:grid-cols-2">
+      <div className="auth-hero hidden min-h-screen lg:block" />
 
-        <h1 className="mt-3 text-2xl font-semibold text-slate-900">
-          Login
-        </h1>
+      <section className="relative min-h-screen overflow-hidden rounded-t-[2rem] bg-slate-50 px-6 pb-16 pt-20 sm:px-10 lg:min-h-screen lg:overflow-y-auto lg:rounded-l-[2rem] lg:rounded-t-none lg:px-24 lg:py-28">
+        <div className="auth-hero absolute inset-x-0 top-0 h-24 rounded-b-[2rem] lg:hidden" />
 
-        <p className="mt-3 text-sm leading-6 text-slate-600">
-          Esta será a tela de entrada da aplicação. Na próxima etapa vamos
-          montar o formulário seguindo o layout do Figma.
-        </p>
+        <div className="relative mx-auto flex w-full max-w-[35rem] flex-col">
+          <img
+            src={logoHelpDesk}
+            alt="HelpDesk"
+            className="mx-auto mb-16 h-auto w-56 lg:mb-24"
+          />
 
-        <p className="mt-4 rounded-lg bg-slate-100 px-3 py-2 text-xs text-slate-600">
-          API configurada: {env.apiUrl}
-        </p>
+          <form className="rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 sm:px-12 sm:py-12">
+            <h1 className="text-4xl font-bold tracking-[-0.03em] text-zinc-900">
+              Acesse o portal
+            </h1>
 
-        <Button className="mt-5 w-full">Entrar</Button>
+            <p className="mt-3 text-xl text-slate-600">
+              Entre usando seu e-mail e senha cadastrados
+            </p>
+
+            <div className="mt-14 flex flex-col gap-9">
+              <Input
+                label="E-mail"
+                name="email"
+                type="email"
+                placeholder="exemplo@mail.com"
+              />
+
+              <Input
+                label="Senha"
+                name="password"
+                type="password"
+                placeholder="Digite sua senha"
+              />
+            </div>
+
+            <Button type="submit" className="mt-14 w-full">
+              Entrar
+            </Button>
+          </form>
+
+          <div className="mt-8 rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 sm:px-12">
+            <h2 className="text-2xl font-bold tracking-[-0.03em] text-zinc-900">
+              Ainda não tem uma conta?
+            </h2>
+
+            <p className="mt-2 text-base text-slate-600">
+              Cadastre agora mesmo
+            </p>
+
+            <Link
+              to="/register"
+              className="mt-8 flex h-14 w-full cursor-pointer items-center justify-center rounded-lg bg-zinc-200 px-4 text-base font-semibold text-zinc-900 transition hover:bg-zinc-300 focus:ring-2 focus:ring-zinc-100 focus:outline-none"
+            >
+              Criar conta
+            </Link>
+          </div>
+        </div>
       </section>
     </main>
   )

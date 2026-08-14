@@ -28,7 +28,7 @@ export function Button({
     <button
       type={type}
       disabled={isDisabled}
-      className={`inline-flex h-14 items-center justify-center rounded-lg px-4 text-base font-semibold outline-none transition focus:ring-2 disabled:cursor-not-allowed disabled:opacity-70 ${variants[variant]} ${className}`}
+      className={`inline-flex h-14 cursor-pointer items-center justify-center rounded-lg px-4 text-base font-semibold outline-none transition focus:ring-2 disabled:cursor-not-allowed disabled:opacity-70 ${variants[variant]} ${className}`}
       {...props}
     >
       {isLoading ? 'Carregando...' : children}
