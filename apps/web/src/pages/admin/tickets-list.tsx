@@ -190,19 +190,19 @@ export function TicketsListPage() {
           </table>
         </section>
 
-        <section className="mt-6 space-y-4 lg:hidden">
+        <section className="mt-6 space-y-3 lg:hidden">
           {adminTickets.map((ticket) => (
             <article
               key={ticket.id}
-              className="rounded-2xl border border-slate-200 bg-white p-4"
+              className="rounded-xl border border-slate-200 bg-white p-4"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-xs font-bold text-blue-700">
+                  <span className="text-[11px] font-bold text-blue-700">
                     #{ticket.id}
                   </span>
 
-                  <strong className="mt-2 block text-sm font-semibold text-slate-900">
+                  <strong className="mt-1.5 block text-sm font-bold text-slate-950">
                     {ticket.title}
                   </strong>
 
@@ -221,16 +221,16 @@ export function TicketsListPage() {
               </div>
 
               <div className="mt-4 grid gap-3 border-t border-slate-100 pt-4">
-                <div className="flex items-center gap-2 text-sm text-slate-700">
-                  <span className="flex size-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
+                <div className="flex items-center gap-2 text-xs text-slate-700">
+                  <span className="flex size-5 items-center justify-center rounded-full bg-blue-700 text-[8px] font-bold text-white">
                     {getInitials(ticket.client)}
                   </span>
 
                   <span>Cliente: {ticket.client}</span>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-slate-700">
-                  <span className="flex size-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
+                <div className="flex items-center gap-2 text-xs text-slate-700">
+                  <span className="flex size-5 items-center justify-center rounded-full bg-blue-700 text-[8px] font-bold text-white">
                     {getInitials(ticket.technician)}
                   </span>
 
@@ -246,9 +246,9 @@ export function TicketsListPage() {
                 <button
                   type="button"
                   aria-label={`Ver chamado ${ticket.id}`}
-                  className="inline-flex size-9 cursor-pointer items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition hover:bg-slate-200 hover:text-slate-900"
+                  className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
                 >
-                  <Pencil size={16} strokeWidth={2.2} />
+                  <Pencil size={14} strokeWidth={2.2} />
                 </button>
               </div>
             </article>
