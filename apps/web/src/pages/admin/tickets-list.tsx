@@ -69,6 +69,11 @@ const adminTickets: AdminTicket[] = [
 ]
 
 export function TicketsListPage() {
+  const currencyFormatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  })
+
   return (
     <AdminLayout>
       <div>
@@ -87,16 +92,22 @@ export function TicketsListPage() {
             <thead className="border-b border-slate-200 bg-slate-50">
               <tr>
                 <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
-                  Atualização
+                  Atualizado em
                 </th>
                 <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
-                  Título / Serviço
+                  Id
                 </th>
                 <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
-                  Técnico
+                  Título e Serviço
+                </th>
+                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                  Valor total
                 </th>
                 <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
                   Cliente
+                </th>
+                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                  Técnico
                 </th>
                 <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
                   Status
@@ -114,6 +125,10 @@ export function TicketsListPage() {
                     {ticket.updatedAt}
                   </td>
 
+                  <td className="px-5 py-4 text-sm font-bold text-slate-950">
+                    {ticket.id}
+                  </td>
+
                   <td className="px-5 py-4">
                     <strong className="block text-sm font-semibold text-slate-900">
                       {ticket.title}
@@ -123,12 +138,16 @@ export function TicketsListPage() {
                     </span>
                   </td>
 
-                  <td className="px-5 py-4 text-sm text-slate-700">
-                    {ticket.technician}
+                  <td className="px-5 py-4 text-sm font-semibold text-slate-900">
+                    {currencyFormatter.format(ticket.totalValue)}
                   </td>
 
                   <td className="px-5 py-4 text-sm text-slate-700">
                     {ticket.client}
+                  </td>
+
+                  <td className="px-5 py-4 text-sm text-slate-700">
+                    {ticket.technician}
                   </td>
 
                   <td className="px-5 py-4">
