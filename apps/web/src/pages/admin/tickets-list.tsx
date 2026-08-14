@@ -1,4 +1,5 @@
 import { Pencil } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { AdminLayout } from '../../components/layout/admin-layout'
 import { TicketStatusBadge } from '../../components/ui/ticket-status-badge'
@@ -168,13 +169,13 @@ export function TicketsListPage() {
                   </td>
 
                   <td className="px-4 py-3 text-right">
-                    <button
-                      type="button"
+                    <Link
+                      to={`/admin/tickets/${ticket.id}`}
                       aria-label={`Ver chamado ${ticket.id}`}
                       className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
                     >
                       <Pencil size={14} strokeWidth={2.2} />
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
@@ -235,13 +236,13 @@ export function TicketsListPage() {
                   Atualizado em {ticket.updatedAt}
                 </span>
 
-                <button
-                  type="button"
+                <Link
+                  to={`/admin/tickets/${ticket.id}`}
                   aria-label={`Ver chamado ${ticket.id}`}
                   className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
                 >
                   <Pencil size={14} strokeWidth={2.2} />
-                </button>
+                </Link>
               </div>
             </article>
           ))}

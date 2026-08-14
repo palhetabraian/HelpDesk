@@ -1,4 +1,5 @@
 import { ArrowLeft, CheckCircle, Clock } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 import { AdminLayout } from '../../components/layout/admin-layout'
 import { TicketStatusBadge } from '../../components/ui/ticket-status-badge'
@@ -43,6 +44,8 @@ function getInitials(name: string) {
 }
 
 export function TicketDetailsPage() {
+  const navigate = useNavigate()
+
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
@@ -53,6 +56,7 @@ export function TicketDetailsPage() {
       <div>
         <button
           type="button"
+          onClick={() => navigate(-1)}
           className="flex cursor-pointer items-center gap-2 text-xs font-medium text-slate-500 transition hover:text-slate-900"
         >
           <ArrowLeft size={14} strokeWidth={2.2} />
