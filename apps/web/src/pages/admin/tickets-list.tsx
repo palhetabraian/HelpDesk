@@ -68,6 +68,15 @@ const adminTickets: AdminTicket[] = [
   },
 ]
 
+function getInitials(name: string) {
+  return name
+    .split(' ')
+    .map((word) => word[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+}
+
 export function TicketsListPage() {
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -142,12 +151,24 @@ export function TicketsListPage() {
                     {currencyFormatter.format(ticket.totalValue)}
                   </td>
 
-                  <td className="px-5 py-4 text-sm text-slate-700">
-                    {ticket.client}
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-2 text-sm text-slate-700">
+                      <span className="flex size-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
+                        {getInitials(ticket.client)}
+                      </span>
+
+                      {ticket.client}
+                    </div>
                   </td>
 
-                  <td className="px-5 py-4 text-sm text-slate-700">
-                    {ticket.technician}
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-2 text-sm text-slate-700">
+                      <span className="flex size-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
+                        {getInitials(ticket.technician)}
+                      </span>
+
+                      {ticket.technician}
+                    </div>
                   </td>
 
                   <td className="px-5 py-4">
