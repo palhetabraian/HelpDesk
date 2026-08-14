@@ -189,6 +189,43 @@ export function TicketsListPage() {
             </tbody>
           </table>
         </section>
+
+        <section className="mt-6 space-y-4 lg:hidden">
+          {adminTickets.map((ticket) => (
+            <article
+              key={ticket.id}
+              className="rounded-2xl border border-slate-200 bg-white p-4"
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <strong className="block text-sm font-semibold text-slate-900">
+                    {ticket.title}
+                  </strong>
+
+                  <span className="mt-1 block text-xs text-slate-500">
+                    {ticket.service}
+                  </span>
+                </div>
+
+                <TicketStatusBadge status={ticket.status} />
+              </div>
+
+              <div className="mt-4 flex items-center justify-between">
+                <span className="text-xs text-slate-500">
+                  Atualizado em {ticket.updatedAt}
+                </span>
+
+                <button
+                  type="button"
+                  aria-label={`Ver chamado ${ticket.id}`}
+                  className="inline-flex size-9 cursor-pointer items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition hover:bg-slate-200 hover:text-slate-900"
+                >
+                  <Pencil size={16} strokeWidth={2.2} />
+                </button>
+              </div>
+            </article>
+          ))}
+        </section>
       </div>
     </AdminLayout>
   )
