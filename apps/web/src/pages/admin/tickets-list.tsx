@@ -12,35 +12,59 @@ type AdminTicket = {
   technician: string
   client: string
   status: TicketStatus
+  totalValue: number
 }
 
 const adminTickets: AdminTicket[] = [
   {
-    id: '00004',
+    id: '00003',
     updatedAt: '13/04/25 20:56',
     title: 'Rede lenta',
     service: 'Instalação de Rede',
     technician: 'Carlos Silva',
     client: 'André Costa',
     status: 'ABERTO',
+    totalValue: 180,
   },
   {
-    id: '00003',
+    id: '00004',
     updatedAt: '12/04/25 15:20',
     title: 'Backup não está funcionando',
     service: 'Recuperação de Dados',
-    technician: 'Ana Oliveira',
-    client: 'Julia Maria',
-    status: 'EM_ATENDIMENTO',
+    technician: 'Carlos Silva',
+    client: 'André Costa',
+    status: 'ABERTO',
+    totalValue: 200,
   },
   {
-    id: '00002',
+    id: '00001',
     updatedAt: '12/04/25 09:01',
     title: 'Computador não liga',
     service: 'Manutenção de Hardware',
-    technician: 'Cíntia Lúcia',
+    technician: 'Carlos Silva',
     client: 'Aline Souza',
+    status: 'EM_ATENDIMENTO',
+    totalValue: 150,
+  },
+  {
+    id: '00002',
+    updatedAt: '10/04/25 10:15',
+    title: 'Instalação de software de gestão',
+    service: 'Suporte de Software',
+    technician: 'Ana Oliveira',
+    client: 'Julia Maria',
     status: 'ENCERRADO',
+    totalValue: 200,
+  },
+  {
+    id: '00005',
+    updatedAt: '11/04/25 15:16',
+    title: 'Meu fone não conecta no computador',
+    service: 'Suporte de Software',
+    technician: 'Ana Oliveira',
+    client: 'Suzane Moura',
+    status: 'ENCERRADO',
+    totalValue: 80,
   },
 ]
 
