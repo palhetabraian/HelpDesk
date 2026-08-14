@@ -1,3 +1,5 @@
+import { Pencil } from 'lucide-react'
+
 import { AdminLayout } from '../../components/layout/admin-layout'
 import { TicketStatusBadge } from '../../components/ui/ticket-status-badge'
 import type { TicketStatus } from '../../types/ticket'
@@ -115,7 +117,7 @@ export function TicketsListPage() {
                       aria-label={`Ver chamado ${ticket.id}`}
                       className="inline-flex size-9 cursor-pointer items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition hover:bg-slate-200 hover:text-slate-900"
                     >
-                      ›
+                      <Pencil size={16} strokeWidth={2.2} />
                     </button>
                   </td>
                 </tr>

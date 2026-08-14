@@ -1,3 +1,11 @@
+import {
+  ClipboardList,
+  Menu,
+  UserCog,
+  Users,
+  Wrench,
+  type LucideIcon,
+} from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import logoHelpDesk from '../../assets/Logo-HelpDesk.svg'
@@ -6,7 +14,29 @@ type AdminLayoutProps = {
   children: ReactNode
 }
 
-const navigationItems = ['Chamados', 'Técnicos', 'Clientes', 'Serviços']
+type NavigationItem = {
+  label: string
+  icon: LucideIcon
+}
+
+const navigationItems: NavigationItem[] = [
+  {
+    label: 'Chamados',
+    icon: ClipboardList,
+  },
+  {
+    label: 'Técnicos',
+    icon: UserCog,
+  },
+  {
+    label: 'Clientes',
+    icon: Users,
+  },
+  {
+    label: 'Serviços',
+    icon: Wrench,
+  },
+]
 
 export function AdminLayout({ children }: AdminLayoutProps) {
   return (
@@ -15,15 +45,20 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <img src={logoHelpDesk} alt="HelpDesk" className="h-auto w-40" />
 
         <nav className="mt-10 flex flex-col gap-2">
-          {navigationItems.map((item) => (
-            <button
-              key={item}
-              type="button"
-              className="cursor-pointer rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-white first:bg-blue-700 first:text-white"
-            >
-              {item}
-            </button>
-          ))}
+          {navigationItems.map((item) => {
+            const Icon = item.icon
+
+            return (
+              <button
+                key={item.label}
+                type="button"
+                className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-white first:bg-blue-700 first:text-white"
+              >
+                <Icon size={18} strokeWidth={2.2} />
+                {item.label}
+              </button>
+            )
+          })}
         </nav>
 
         <div className="mt-auto flex items-center gap-3 rounded-xl bg-slate-900 p-3">
@@ -45,7 +80,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             aria-label="Abrir menu"
             className="flex size-10 cursor-pointer items-center justify-center rounded-lg bg-zinc-900 text-white"
           >
-            <span className="text-xl leading-none">☰</span>
+            <Menu size={22} strokeWidth={2.2} />
           </button>
 
           <img src={logoHelpDesk} alt="HelpDesk" className="h-auto w-36" />
