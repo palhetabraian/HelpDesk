@@ -1,8 +1,8 @@
-import { ArrowLeft, CheckCircle, Clock } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { ArrowLeft, CheckCircle, Clock } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-import { AdminLayout } from '../../components/layout/admin-layout'
-import { TicketStatusBadge } from '../../components/ui/ticket-status-badge'
+import { AdminLayout } from '../../components/layout/admin-layout';
+import { TicketStatusBadge } from '../../components/ui/ticket-status-badge';
 
 const ticketDetails = {
   id: '00004',
@@ -32,7 +32,7 @@ const ticketDetails = {
     },
   ],
   total: 395,
-} as const
+} as const;
 
 function getInitials(name: string) {
   return name
@@ -40,38 +40,39 @@ function getInitials(name: string) {
     .map((word) => word[0])
     .join('')
     .slice(0, 2)
-    .toUpperCase()
+    .toUpperCase();
 }
 
 export function TicketDetailsPage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
-  })
+  });
 
   return (
     <AdminLayout>
-      <div>
+      <div className="mx-auto w-full max-w-[950px]">
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="flex cursor-pointer items-center gap-2 text-xs font-medium text-slate-500 transition hover:text-slate-900"
+          className="flex cursor-pointer items-center gap-2 text-[11px] font-medium text-slate-500 transition hover:text-slate-900"
         >
-          <ArrowLeft size={14} strokeWidth={2.2} />
+          <ArrowLeft size={13} strokeWidth={2.2} />
           Voltar
         </button>
 
-        <div className="mt-3 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <h1 className="text-2xl font-bold text-blue-700">
+        <div className="mt-2.5 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <h1 className="text-xl font-bold text-blue-700 md:text-2xl">
             Chamado detalhado
           </h1>
 
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2 md:flex">
             <button
               type="button"
-              className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-slate-200 px-5 text-xs font-semibold text-slate-700 transition hover:bg-slate-300"
+              aria-label="Alterar chamado para em atendimento"
+              className="flex h-9 cursor-pointer items-center justify-center gap-2 rounded-md bg-slate-200 px-4 text-xs font-semibold text-slate-700 transition hover:bg-slate-300 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 md:min-w-[132px]"
             >
               <Clock size={14} strokeWidth={2.2} />
               Em atendimento
@@ -79,7 +80,8 @@ export function TicketDetailsPage() {
 
             <button
               type="button"
-              className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-slate-200 px-5 text-xs font-semibold text-slate-700 transition hover:bg-slate-300"
+              aria-label="Alterar chamado para encerrado"
+              className="flex h-9 cursor-pointer items-center justify-center gap-2 rounded-md bg-slate-200 px-4 text-xs font-semibold text-slate-700 transition hover:bg-slate-300 hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700 md:min-w-[104px]"
             >
               <CheckCircle size={14} strokeWidth={2.2} />
               Encerrado
@@ -87,8 +89,8 @@ export function TicketDetailsPage() {
           </div>
         </div>
 
-        <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_280px]">
-          <section className="rounded-xl border border-slate-200 bg-white p-5">
+        <div className="mt-6 grid gap-4 lg:grid-cols-[1fr_240px] lg:items-start lg:gap-5">
+          <section className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 md:p-5">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <span className="text-xs font-semibold text-slate-500">
@@ -103,11 +105,11 @@ export function TicketDetailsPage() {
               <TicketStatusBadge status={ticketDetails.status} />
             </div>
 
-            <div className="mt-6">
+            <div className="mt-5">
               <span className="text-xs font-semibold text-slate-500">
                 Descrição
               </span>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-700">
+              <p className="mt-2 max-w-[380px] text-sm leading-relaxed text-slate-700">
                 {ticketDetails.description}
               </p>
             </div>
@@ -141,7 +143,7 @@ export function TicketDetailsPage() {
               </div>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-5">
               <span className="text-xs font-semibold text-slate-500">
                 Cliente
               </span>
@@ -155,7 +157,7 @@ export function TicketDetailsPage() {
             </div>
           </section>
 
-          <aside className="rounded-xl border border-slate-200 bg-white p-5">
+          <aside className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 md:p-5">
             <span className="text-xs font-semibold text-slate-500">
               Técnico responsável
             </span>
@@ -175,7 +177,7 @@ export function TicketDetailsPage() {
               </div>
             </div>
 
-            <div className="mt-8">
+            <div className="mt-7">
               <span className="text-xs font-semibold text-slate-500">
                 Valores
               </span>
@@ -220,5 +222,5 @@ export function TicketDetailsPage() {
         </div>
       </div>
     </AdminLayout>
-  )
+  );
 }
