@@ -27,3 +27,12 @@ textarea,
 select {
   font: inherit;
 }
+
+.auth-hero {
+  background:
+    radial-gradient(circle at 12% 88%, rgba(41, 82, 255, 0.95) 0 9%, transparent 9.5%),
+    radial-gradient(circle at 10% 88%, transparent 0 17%, rgba(52, 95, 255, 0.65) 17.5% 24%, transparent 24.5%),
+    radial-gradient(circle at 8% 88%, transparent 0 31%, rgba(48, 91, 255, 0.5) 31.5% 38%, transparent 38.5%),
+    radial-gradient(circle at 6% 88%, transparent 0 45%, rgba(40, 74, 205, 0.45) 45.5% 53%, transparent 53.5%),
+    linear-gradient(135deg, #162460 0%, #223baa 45%, #10152f 100%);
+}
