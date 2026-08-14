@@ -96,32 +96,32 @@ export function TicketsListPage() {
           {adminTickets.length} chamados encontrados.
         </p>
 
-        <section className="mt-6 hidden overflow-hidden rounded-2xl border border-slate-200 bg-white lg:block">
+        <section className="mt-6 hidden overflow-hidden rounded-xl border border-slate-200 bg-white lg:block">
           <table className="w-full border-collapse text-left">
             <thead className="border-b border-slate-200 bg-slate-50">
               <tr>
-                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500">
                   Atualizado em
                 </th>
-                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500">
                   Id
                 </th>
-                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500">
                   Título e Serviço
                 </th>
-                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500">
                   Valor total
                 </th>
-                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500">
                   Cliente
                 </th>
-                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500">
                   Técnico
                 </th>
-                <th className="px-5 py-4 text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                <th className="px-4 py-3 text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500">
                   Status
                 </th>
-                <th className="px-5 py-4 text-right text-xs font-bold uppercase tracking-[0.08em] text-slate-500">
+                <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-[0.08em] text-slate-500">
                   Ação
                 </th>
               </tr>
@@ -130,30 +130,30 @@ export function TicketsListPage() {
             <tbody className="divide-y divide-slate-100">
               {adminTickets.map((ticket) => (
                 <tr key={ticket.id} className="transition hover:bg-slate-50">
-                  <td className="px-5 py-4 text-sm text-slate-600">
+                  <td className="px-4 py-3 text-xs text-slate-600">
                     {ticket.updatedAt}
                   </td>
 
-                  <td className="px-5 py-4 text-sm font-bold text-slate-950">
+                  <td className="px-4 py-3 text-xs font-bold text-slate-950">
                     {ticket.id}
                   </td>
 
-                  <td className="px-5 py-4">
-                    <strong className="block text-sm font-semibold text-slate-900">
+                  <td className="px-4 py-3">
+                    <strong className="block text-xs font-bold text-slate-950">
                       {ticket.title}
                     </strong>
-                    <span className="mt-1 block text-xs text-slate-500">
+                    <span className="mt-1 block text-[11px] text-slate-600">
                       {ticket.service}
                     </span>
                   </td>
 
-                  <td className="px-5 py-4 text-sm font-semibold text-slate-900">
+                  <td className="px-4 py-3 text-xs font-semibold text-slate-900">
                     {currencyFormatter.format(ticket.totalValue)}
                   </td>
 
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-2 text-sm text-slate-700">
-                      <span className="flex size-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2 text-xs text-slate-700">
+                      <span className="flex size-5 items-center justify-center rounded-full bg-blue-700 text-[8px] font-bold text-white">
                         {getInitials(ticket.client)}
                       </span>
 
@@ -161,9 +161,9 @@ export function TicketsListPage() {
                     </div>
                   </td>
 
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-2 text-sm text-slate-700">
-                      <span className="flex size-6 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2 text-xs text-slate-700">
+                      <span className="flex size-5 items-center justify-center rounded-full bg-blue-700 text-[8px] font-bold text-white">
                         {getInitials(ticket.technician)}
                       </span>
 
@@ -171,17 +171,17 @@ export function TicketsListPage() {
                     </div>
                   </td>
 
-                  <td className="px-5 py-4">
+                  <td className="px-4 py-3">
                     <TicketStatusBadge status={ticket.status} />
                   </td>
 
-                  <td className="px-5 py-4 text-right">
+                  <td className="px-4 py-3 text-right">
                     <button
                       type="button"
                       aria-label={`Ver chamado ${ticket.id}`}
-                      className="inline-flex size-9 cursor-pointer items-center justify-center rounded-lg bg-slate-100 text-slate-600 transition hover:bg-slate-200 hover:text-slate-900"
+                      className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
                     >
-                      <Pencil size={16} strokeWidth={2.2} />
+                      <Pencil size={14} strokeWidth={2.2} />
                     </button>
                   </td>
                 </tr>
