@@ -7,6 +7,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { NavLink } from 'react-router-dom'
 
 import logoHelpDesk from '../../assets/Logo-HelpDesk.svg'
 
@@ -17,24 +18,29 @@ type AdminLayoutProps = {
 type NavigationItem = {
   label: string
   icon: LucideIcon
+  href: string
 }
 
 const navigationItems: NavigationItem[] = [
   {
     label: 'Chamados',
     icon: ClipboardList,
+    href: '/admin/tickets',
   },
   {
     label: 'Técnicos',
     icon: UserCog,
+    href: '/admin/technicians',
   },
   {
     label: 'Clientes',
     icon: Users,
+    href: '/admin/clients',
   },
   {
     label: 'Serviços',
     icon: Wrench,
+    href: '/admin/services',
   },
 ]
 
@@ -49,14 +55,19 @@ export function AdminLayout({ children }: AdminLayoutProps) {
             const Icon = item.icon
 
             return (
-              <button
+              <NavLink
                 key={item.label}
-                type="button"
-                className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-white first:bg-blue-700 first:text-white"
+                to={item.href}
+                className={({ isActive }) =>
+                  [
+                    'flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium transition hover:bg-slate-900 hover:text-white',
+                    isActive ? 'bg-blue-700 text-white' : 'text-slate-400',
+                  ].join(' ')
+                }
               >
                 <Icon size={18} strokeWidth={2.2} />
                 {item.label}
-              </button>
+              </NavLink>
             )
           })}
         </nav>
