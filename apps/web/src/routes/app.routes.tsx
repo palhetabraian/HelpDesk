@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import { ClientsListPage } from '../pages/admin/clients-list'
 import { TicketDetailsPage } from '../pages/admin/ticket-details'
 import { TechnicianProfilePage } from '../pages/admin/technician-profile'
 import { TechniciansListPage } from '../pages/admin/technicians-list'
@@ -22,6 +23,7 @@ export function AppRoutes() {
           path="/admin/technicians/:technicianId/edit"
           element={<TechnicianProfilePage />}
         />
+        <Route path="/admin/clients" element={<ClientsListPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
