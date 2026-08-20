@@ -9,6 +9,7 @@ import { TicketsListPage } from '../pages/admin/tickets-list'
 import { LoginPage } from '../pages/auth/login'
 import { RegisterPage } from '../pages/auth/register'
 import { NotFoundPage } from '../pages/shared/not-found'
+import { TechnicianTicketsListPage } from '../pages/technician/technician-tickets-list'
 
 export function AppRoutes() {
   return (
@@ -26,6 +27,7 @@ export function AppRoutes() {
         />
         <Route path="/admin/clients" element={<ClientsListPage />} />
         <Route path="/admin/services" element={<ServicesListPage />} />
+        <Route path="/technician/tickets" element={<TechnicianTicketsListPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
