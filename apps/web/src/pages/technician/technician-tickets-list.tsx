@@ -1,4 +1,11 @@
-import { CheckCircle, PlayCircle } from 'lucide-react'
+import {
+  CheckCircle,
+  CircleHelp,
+  Clock,
+  Pencil,
+  PlayCircle,
+  type LucideIcon,
+} from 'lucide-react'
 
 import { TechnicianLayout } from '../../components/layout/technician-layout'
 import { TicketStatusBadge } from '../../components/ui/ticket-status-badge'
@@ -13,6 +20,26 @@ type TechnicianTicket = {
   client: string
   status: TicketStatus
 }
+
+type TicketSection = {
+  title: string
+  status: TicketStatus
+}
+
+const ticketSections: TicketSection[] = [
+  {
+    title: 'Em atendimento',
+    status: 'EM_ATENDIMENTO',
+  },
+  {
+    title: 'Aberto',
+    status: 'ABERTO',
+  },
+  {
+    title: 'Encerrado',
+    status: 'ENCERRADO',
+  },
+]
 
 const technicianTickets: TechnicianTicket[] = [
   {
@@ -42,7 +69,46 @@ const technicianTickets: TechnicianTicket[] = [
     client: 'Aline Souza',
     status: 'ABERTO',
   },
+  {
+    id: '00002',
+    title: 'Instalação de software',
+    service: 'Suporte de Software',
+    price: 'R$ 200,00',
+    updatedAt: '10/04/25 10:15',
+    client: 'Julia Maria',
+    status: 'ABERTO',
+  },
+  {
+    id: '00005',
+    title: 'Meu fone não conecta',
+    service: 'Suporte de Software',
+    price: 'R$ 80,00',
+    updatedAt: '11/04/25 15:16',
+    client: 'Suzane Moura',
+    status: 'ENCERRADO',
+  },
 ]
+
+const statusIconConfig: Record<
+  TicketStatus,
+  {
+    icon: LucideIcon
+    className: string
+  }
+> = {
+  ABERTO: {
+    icon: CircleHelp,
+    className: 'bg-pink-100 text-pink-600 ring-pink-200',
+  },
+  EM_ATENDIMENTO: {
+    icon: Clock,
+    className: 'bg-blue-100 text-blue-600 ring-blue-200',
+  },
+  ENCERRADO: {
+    icon: CheckCircle,
+    className: 'bg-green-100 text-green-700 ring-green-200',
+  },
+}
 
 function getInitials(name: string) {
   return name
@@ -67,73 +133,114 @@ function getTicketAction(ticket: TechnicianTicket) {
   }
 }
 
+function TechnicianTicketCard({ ticket }: { ticket: TechnicianTicket }) {
+  const action = getTicketAction(ticket)
+  const ActionIcon = action.icon
+  const statusConfig = statusIconConfig[ticket.status]
+  const StatusIcon = statusConfig.icon
+  const canChangeStatus = ticket.status !== 'ENCERRADO'
+
+  return (
+    <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-4">
+        <span className="text-base font-bold text-slate-400">{ticket.id}</span>
+
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label={`Editar chamado ${ticket.id}`}
+            className="inline-flex size-9 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
+          >
+            <Pencil size={18} strokeWidth={2} />
+          </button>
+
+          {canChangeStatus && (
+            <button
+              type="button"
+              className="inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-lg bg-[#1E2024] px-4 text-sm font-bold text-white transition hover:bg-zinc-800"
+            >
+              <ActionIcon size={18} strokeWidth={2.2} />
+              {action.label}
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-3">
+        <h2 className="text-xl font-bold leading-tight text-[#1E2024]">
+          {ticket.title}
+        </h2>
+        <p className="mt-1 text-base leading-tight text-[#1E2024]">
+          {ticket.service}
+        </p>
+      </div>
+
+      <div className="mt-6 flex items-end justify-between gap-4">
+        <span className="text-base font-medium text-[#1E2024]">
+          {ticket.updatedAt}
+        </span>
+        <strong className="text-base font-bold text-[#1E2024]">
+          {ticket.price}
+        </strong>
+      </div>
+
+      <div className="mt-5 flex items-center justify-between border-t border-slate-200 pt-5">
+        <div className="flex items-center gap-3">
+          <span className="flex size-8 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">
+            {getInitials(ticket.client)}
+          </span>
+          <span className="text-base font-bold text-[#1E2024]">
+            {ticket.client}
+          </span>
+        </div>
+
+        <span
+          className={[
+            'inline-flex size-9 items-center justify-center rounded-full ring-1',
+            statusConfig.className,
+          ].join(' ')}
+          aria-label={`Status do chamado ${ticket.id}`}
+        >
+          <StatusIcon size={20} strokeWidth={2.4} />
+        </span>
+      </div>
+    </article>
+  )
+}
+
 export function TechnicianTicketsListPage() {
   return (
     <TechnicianLayout>
-      <div className="mx-auto w-full max-w-[980px]">
+      <div className="w-full max-w-[1110px]">
         <h1 className="text-xl font-bold text-blue-700 lg:text-2xl">
           Meus chamados
         </h1>
 
-        <section className="mt-6 grid gap-3 lg:gap-4">
-          {technicianTickets.map((ticket) => {
-            const action = getTicketAction(ticket)
-            const ActionIcon = action.icon
+        <div className="mt-7 grid gap-8">
+          {ticketSections.map((section) => {
+            const tickets = technicianTickets.filter(
+              (ticket) => ticket.status === section.status,
+            )
+
+            if (tickets.length === 0) {
+              return null
+            }
 
             return (
-              <article
-                key={ticket.id}
-                className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm lg:grid lg:grid-cols-[110px_1fr_120px_150px_132px] lg:items-center lg:gap-5 lg:p-5"
-              >
-                <div className="flex items-start justify-between gap-3 lg:block">
-                  <span className="text-xs font-bold text-slate-500">
-                    {ticket.id}
-                  </span>
-
-                  <div className="lg:mt-4">
-                    <TicketStatusBadge status={ticket.status} />
-                  </div>
+              <section key={section.status}>
+                <div className="mb-4">
+                  <TicketStatusBadge status={section.status} />
                 </div>
 
-                <div className="mt-4 lg:mt-0">
-                  <h2 className="text-sm font-bold text-slate-950">
-                    {ticket.title}
-                  </h2>
-                  <p className="mt-1 text-xs font-medium text-slate-500">
-                    {ticket.service}
-                  </p>
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                  {tickets.map((ticket) => (
+                    <TechnicianTicketCard key={ticket.id} ticket={ticket} />
+                  ))}
                 </div>
-
-                <strong className="mt-4 block text-sm font-bold text-slate-950 lg:mt-0">
-                  {ticket.price}
-                </strong>
-
-                <div className="mt-4 flex items-center gap-2 lg:mt-0">
-                  <span className="flex size-7 items-center justify-center rounded-full bg-blue-700 text-[10px] font-bold text-white">
-                    {getInitials(ticket.client)}
-                  </span>
-                  <span className="text-sm font-medium text-slate-700">
-                    {ticket.client}
-                  </span>
-                </div>
-
-                <div className="mt-4 flex items-center justify-between gap-3 border-t border-slate-100 pt-4 lg:mt-0 lg:justify-end lg:border-0 lg:pt-0">
-                  <span className="text-xs font-medium text-slate-500 lg:hidden">
-                    {ticket.updatedAt}
-                  </span>
-
-                  <button
-                    type="button"
-                    className="inline-flex h-9 cursor-pointer items-center justify-center gap-2 rounded-md bg-slate-200 px-4 text-xs font-bold text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
-                  >
-                    <ActionIcon size={14} strokeWidth={2.2} />
-                    {action.label}
-                  </button>
-                </div>
-              </article>
+              </section>
             )
           })}
-        </section>
+        </div>
       </div>
     </TechnicianLayout>
   )

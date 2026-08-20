@@ -30,10 +30,10 @@ const navigationItems: NavigationItem[] = [
 export function TechnicianLayout({ children }: TechnicianLayoutProps) {
   return (
     <div className="min-h-dvh bg-slate-50 text-slate-900 lg:flex">
-      <aside className="hidden w-64 shrink-0 border-r border-slate-800 bg-zinc-950 px-5 py-6 lg:flex lg:min-h-dvh lg:flex-col">
-        <img src={logoHelpDesk} alt="HelpDesk" className="h-auto w-40" />
+      <aside className="hidden w-[200px] shrink-0 border-r border-slate-800 bg-zinc-950 px-6 py-8 lg:flex lg:min-h-dvh lg:flex-col">
+        <img src={logoHelpDesk} alt="HelpDesk" className="h-auto w-32" />
 
-        <nav className="mt-10 flex flex-col gap-2">
+        <nav className="mt-12 flex flex-col gap-2">
           {navigationItems.map((item) => {
             const Icon = item.icon
 
@@ -43,7 +43,7 @@ export function TechnicianLayout({ children }: TechnicianLayoutProps) {
                 to={item.href}
                 className={({ isActive }) =>
                   [
-                    'flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium transition hover:bg-slate-900 hover:text-white',
+                    'flex cursor-pointer items-center gap-3 rounded-md px-4 py-3 text-left text-xs font-medium transition hover:bg-slate-900 hover:text-white',
                     isActive ? 'bg-blue-700 text-white' : 'text-slate-400',
                   ].join(' ')
                 }
@@ -55,13 +55,13 @@ export function TechnicianLayout({ children }: TechnicianLayoutProps) {
           })}
         </nav>
 
-        <div className="mt-auto flex items-center gap-3 rounded-xl bg-slate-900 p-3">
-          <div className="flex size-10 items-center justify-center rounded-full bg-blue-700 text-sm font-bold text-white">
+        <div className="mt-auto flex items-center gap-3 border-t border-slate-800 pt-5">
+          <div className="flex size-9 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">
             UT
           </div>
 
           <div>
-            <strong className="block text-sm text-white">
+            <strong className="block text-xs text-white">
               Usuário Técnico
             </strong>
             <span className="text-xs font-medium text-slate-400">
@@ -88,7 +88,7 @@ export function TechnicianLayout({ children }: TechnicianLayoutProps) {
           </div>
         </header>
 
-        <main className="flex-1 px-5 py-6 sm:px-8 lg:px-10 lg:py-8">
+        <main className="flex-1 px-5 py-6 sm:px-8 lg:px-12 lg:py-12">
           {children}
         </main>
       </div>
