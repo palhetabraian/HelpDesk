@@ -6,6 +6,7 @@ import {
   PlayCircle,
   type LucideIcon,
 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { TechnicianLayout } from '../../components/layout/technician-layout'
 import { TicketStatusBadge } from '../../components/ui/ticket-status-badge'
@@ -146,13 +147,13 @@ function TechnicianTicketCard({ ticket }: { ticket: TechnicianTicket }) {
         <span className="text-base font-bold text-slate-400">{ticket.id}</span>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
+          <Link
+            to={`/technician/tickets/${ticket.id}`}
             aria-label={`Editar chamado ${ticket.id}`}
             className="inline-flex size-9 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
           >
             <Pencil size={18} strokeWidth={2} />
-          </button>
+          </Link>
 
           {canChangeStatus && (
             <button
