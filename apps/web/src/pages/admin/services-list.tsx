@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react'
+import { Pencil, Plus } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 
 import { AdminLayout } from '../../components/layout/admin-layout'
@@ -48,16 +48,27 @@ function getStatusClasses(isActive: boolean) {
 export function ServicesListPage() {
   const [isCreateServiceModalOpen, setIsCreateServiceModalOpen] =
     useState(false)
+  const [selectedService, setSelectedService] = useState<Service | null>(null)
+
+  const isServiceModalOpen = isCreateServiceModalOpen || selectedService !== null
+  const serviceModalTitle = selectedService ? 'Serviço' : 'Cadastro de serviço'
 
   function openCreateServiceModal() {
+    setSelectedService(null)
     setIsCreateServiceModalOpen(true)
   }
 
-  function closeCreateServiceModal() {
+  function openEditServiceModal(service: Service) {
     setIsCreateServiceModalOpen(false)
+    setSelectedService(service)
   }
 
-  function handleCreateServiceSubmit(event: FormEvent<HTMLFormElement>) {
+  function closeServiceModal() {
+    setIsCreateServiceModalOpen(false)
+    setSelectedService(null)
+  }
+
+  function handleServiceSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
   }
 
@@ -84,13 +95,13 @@ export function ServicesListPage() {
           <table className="w-full border-collapse text-left">
             <thead className="border-b border-slate-200 bg-slate-50">
               <tr>
-                <th className="w-[45%] px-4 py-3 text-[11px] font-bold text-slate-500">
+                <th className="w-[42%] px-4 py-3 text-[11px] font-bold text-slate-500">
                   Título
                 </th>
-                <th className="w-[20%] px-4 py-3 text-[11px] font-bold text-slate-500">
+                <th className="w-[18%] px-4 py-3 text-[11px] font-bold text-slate-500">
                   Valor
                 </th>
-                <th className="w-[20%] px-4 py-3 text-[11px] font-bold text-slate-500">
+                <th className="w-[18%] px-4 py-3 text-[11px] font-bold text-slate-500">
                   Status
                 </th>
                 <th className="px-4 py-3 text-right text-[11px] font-bold text-slate-500">
@@ -126,13 +137,24 @@ export function ServicesListPage() {
                     </span>
                   </td>
 
-                  <td className="px-4 py-4 text-right">
-                    <button
-                      type="button"
-                      className="h-8 cursor-pointer rounded-md bg-slate-200 px-4 text-xs font-bold text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
-                    >
-                      {service.isActive ? 'Desativar' : 'Reativar'}
-                    </button>
+                  <td className="px-4 py-4">
+                    <div className="flex justify-end gap-2">
+                      <button
+                        type="button"
+                        className="h-8 cursor-pointer rounded-md bg-slate-200 px-4 text-xs font-bold text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
+                      >
+                        {service.isActive ? 'Desativar' : 'Reativar'}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => openEditServiceModal(service)}
+                        aria-label={`Editar serviço ${service.title}`}
+                        className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
+                      >
+                        <Pencil size={14} strokeWidth={2.2} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -174,18 +196,29 @@ export function ServicesListPage() {
                   </span>
                 </div>
 
-                <button
-                  type="button"
-                  className="mt-4 h-9 w-full cursor-pointer rounded-md bg-slate-200 text-xs font-bold text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
-                >
-                  {service.isActive ? 'Desativar' : 'Reativar'}
-                </button>
+                <div className="mt-4 grid grid-cols-[1fr_40px] gap-2">
+                  <button
+                    type="button"
+                    className="h-9 cursor-pointer rounded-md bg-slate-200 text-xs font-bold text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
+                  >
+                    {service.isActive ? 'Desativar' : 'Reativar'}
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => openEditServiceModal(service)}
+                    aria-label={`Editar serviço ${service.title}`}
+                    className="inline-flex size-9 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
+                  >
+                    <Pencil size={14} strokeWidth={2.2} />
+                  </button>
+                </div>
               </article>
             ))}
           </div>
         </section>
 
-        {isCreateServiceModalOpen && (
+        {isServiceModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 px-4 py-6">
             <div
               role="dialog"
@@ -197,10 +230,10 @@ export function ServicesListPage() {
                 id="service-modal-title"
                 className="text-base font-bold text-slate-900"
               >
-                Cadastro de serviço
+                {serviceModalTitle}
               </h2>
 
-              <form onSubmit={handleCreateServiceSubmit} className="mt-6">
+              <form onSubmit={handleServiceSubmit} className="mt-6">
                 <div className="grid gap-5">
                   <div>
                     <label
@@ -213,6 +246,7 @@ export function ServicesListPage() {
                       id="service-title"
                       name="title"
                       type="text"
+                      defaultValue={selectedService?.title ?? ''}
                       placeholder="Nome do serviço"
                       className="mt-2 w-full border-0 border-b border-slate-200 bg-transparent pb-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
                     />
@@ -229,6 +263,7 @@ export function ServicesListPage() {
                       id="service-price"
                       name="price"
                       type="text"
+                      defaultValue={selectedService?.price ?? ''}
                       placeholder="R$ 0,00"
                       className="mt-2 w-full border-0 border-b border-slate-200 bg-transparent pb-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
                     />
@@ -238,7 +273,7 @@ export function ServicesListPage() {
                 <div className="mt-6 grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={closeCreateServiceModal}
+                    onClick={closeServiceModal}
                     className="h-9 cursor-pointer rounded-md bg-slate-200 text-xs font-bold text-slate-900 transition hover:bg-slate-300"
                   >
                     Cancelar
