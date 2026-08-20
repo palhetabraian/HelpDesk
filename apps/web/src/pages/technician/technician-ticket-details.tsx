@@ -1,4 +1,5 @@
-import { ArrowLeft, CheckCircle, Clock, Plus, Trash2 } from 'lucide-react'
+import { ArrowLeft, CheckCircle, Clock, Plus, Trash2, X } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { TechnicianLayout } from '../../components/layout/technician-layout'
@@ -45,11 +46,25 @@ function getInitials(name: string) {
 
 export function TechnicianTicketDetailsPage() {
   const navigate = useNavigate()
+  const [isAddServiceModalOpen, setIsAddServiceModalOpen] = useState(false)
 
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   })
+
+  function openAddServiceModal() {
+    setIsAddServiceModalOpen(true)
+  }
+
+  function closeAddServiceModal() {
+    setIsAddServiceModalOpen(false)
+  }
+
+  function handleAddServiceSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    closeAddServiceModal()
+  }
 
   return (
     <TechnicianLayout>
@@ -72,7 +87,7 @@ export function TechnicianTicketDetailsPage() {
             <button
               type="button"
               aria-label="Iniciar atendimento"
-              className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-[#1E2024] px-4 text-xs font-semibold text-white transition hover:bg-zinc-800 md:min-w-[132px]"
+              className="flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded-md bg-[#1E2024] px-2 text-[11px] font-semibold whitespace-nowrap text-white transition hover:bg-zinc-800 md:min-w-[132px] md:gap-2 md:px-4 md:text-xs"
             >
               <Clock size={14} strokeWidth={2.2} />
               Iniciar atendimento
@@ -81,7 +96,7 @@ export function TechnicianTicketDetailsPage() {
             <button
               type="button"
               aria-label="Encerrar chamado"
-              className="flex h-10 cursor-pointer items-center justify-center gap-2 rounded-md bg-slate-200 px-4 text-xs font-semibold text-slate-700 transition hover:bg-slate-300 hover:text-slate-900 md:min-w-[104px]"
+              className="flex h-10 cursor-pointer items-center justify-center gap-1.5 rounded-md bg-slate-200 px-2 text-[11px] font-semibold whitespace-nowrap text-slate-700 transition hover:bg-slate-300 hover:text-slate-900 md:min-w-[104px] md:gap-2 md:px-4 md:text-xs"
             >
               <CheckCircle size={14} strokeWidth={2.2} />
               Encerrar
@@ -166,6 +181,7 @@ export function TechnicianTicketDetailsPage() {
 
                 <button
                   type="button"
+                  onClick={openAddServiceModal}
                   aria-label="Adicionar serviço ao chamado"
                   className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md bg-[#1E2024] text-white transition hover:bg-zinc-800"
                 >
@@ -177,7 +193,7 @@ export function TechnicianTicketDetailsPage() {
                 {ticketDetails.additionalServices.map((service) => (
                   <div
                     key={service.name}
-                    className="grid grid-cols-[1fr_auto_32px] items-center gap-4 py-3 first:pt-0 last:pb-0"
+                    className="grid grid-cols-[1fr_auto_32px] items-center gap-3 py-3 first:pt-0 last:pb-0 sm:gap-4"
                   >
                     <strong className="text-sm font-semibold text-slate-900">
                       {service.name}
@@ -255,6 +271,80 @@ export function TechnicianTicketDetailsPage() {
             </div>
           </aside>
         </div>
+
+        {isAddServiceModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 px-4 py-6">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="add-service-modal-title"
+              className="w-full max-w-[280px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl sm:max-w-[360px]"
+            >
+              <div className="flex h-14 items-center justify-between border-b border-slate-100 px-4 sm:h-16 sm:px-6">
+                <h2
+                  id="add-service-modal-title"
+                  className="text-base font-bold text-slate-900"
+                >
+                  Serviço adicional
+                </h2>
+
+                <button
+                  type="button"
+                  onClick={closeAddServiceModal}
+                  aria-label="Fechar modal de serviço adicional"
+                  className="flex size-8 cursor-pointer items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-900"
+                >
+                  <X size={18} strokeWidth={2.2} />
+                </button>
+              </div>
+
+              <form onSubmit={handleAddServiceSubmit}>
+                <div className="grid gap-5 px-4 py-6 sm:px-6">
+                  <div>
+                    <label
+                      htmlFor="additional-service-title"
+                      className="text-[10px] font-bold uppercase tracking-[0.08em] text-slate-600"
+                    >
+                      Título
+                    </label>
+                    <input
+                      id="additional-service-title"
+                      name="title"
+                      type="text"
+                      placeholder="Instalação de rede"
+                      className="mt-2 w-full border-0 border-b border-slate-200 bg-transparent pb-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="additional-service-price"
+                      className="text-[10px] font-bold uppercase tracking-[0.08em] text-slate-600"
+                    >
+                      Valor
+                    </label>
+                    <input
+                      id="additional-service-price"
+                      name="price"
+                      type="text"
+                      placeholder="R$ 180,00"
+                      className="mt-2 w-full border-0 border-b border-slate-200 bg-transparent pb-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
+                    />
+                  </div>
+                </div>
+
+                <div className="border-t border-slate-100 px-4 py-4 sm:px-6">
+                  <button
+                    type="submit"
+                    className="h-10 w-full cursor-pointer rounded-md bg-[#1E2024] text-sm font-semibold text-white transition hover:bg-zinc-800"
+                  >
+                    Salvar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </TechnicianLayout>
   )
