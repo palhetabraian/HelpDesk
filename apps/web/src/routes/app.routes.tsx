@@ -9,6 +9,7 @@ import { TicketsListPage } from '../pages/admin/tickets-list'
 import { LoginPage } from '../pages/auth/login'
 import { RegisterPage } from '../pages/auth/register'
 import { NotFoundPage } from '../pages/shared/not-found'
+import { TechnicianProfilePage as TechnicianOwnProfilePage } from '../pages/technician/technician-profile'
 import { TechnicianTicketDetailsPage } from '../pages/technician/technician-ticket-details'
 import { TechnicianTicketsListPage } from '../pages/technician/technician-tickets-list'
 
@@ -32,6 +33,10 @@ export function AppRoutes() {
         <Route
           path="/technician/tickets/:ticketId"
           element={<TechnicianTicketDetailsPage />}
+        />
+        <Route
+          path="/technician/profile"
+          element={<TechnicianOwnProfilePage />}
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
