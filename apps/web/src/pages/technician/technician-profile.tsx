@@ -1,8 +1,21 @@
-import { ArrowLeft, Trash2, Upload, X } from 'lucide-react'
+import {
+  ArrowLeft,
+  CheckCircle,
+  CircleHelp,
+  Clock,
+  Pencil,
+  PlayCircle,
+  Trash2,
+  Upload,
+  X,
+  type LucideIcon,
+} from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { TechnicianLayout } from '../../components/layout/technician-layout'
+import { TicketStatusBadge } from '../../components/ui/ticket-status-badge'
+import type { TicketStatus } from '../../types/ticket'
 
 const technicianProfile = {
   initials: 'CS',
@@ -11,42 +24,224 @@ const technicianProfile = {
   availability: ['09:00', '10:00', '12:00', '13:00', '15:00', '16:00'],
 }
 
+type ProfileBackgroundTicket = {
+  id: string
+  title: string
+  service: string
+  price: string
+  updatedAt: string
+  client: string
+  status: TicketStatus
+}
+
+type ProfileBackgroundSection = {
+  title: string
+  status: TicketStatus
+}
+
+const profileBackgroundSections: ProfileBackgroundSection[] = [
+  {
+    title: 'Em atendimento',
+    status: 'EM_ATENDIMENTO',
+  },
+  {
+    title: 'Aberto',
+    status: 'ABERTO',
+  },
+  {
+    title: 'Encerrado',
+    status: 'ENCERRADO',
+  },
+]
+
+const profileBackgroundTickets: ProfileBackgroundTicket[] = [
+  {
+    id: '00003',
+    title: 'Rede lenta',
+    service: 'Instalação de Rede',
+    price: 'R$ 200,00',
+    updatedAt: '10/04/25 15:13',
+    client: 'André Costa',
+    status: 'EM_ATENDIMENTO',
+  },
+  {
+    id: '00004',
+    title: 'Backup não está funcionando',
+    service: 'Recuperação de Dados',
+    price: 'R$ 200,00',
+    updatedAt: '12/04/25 15:20',
+    client: 'André Costa',
+    status: 'ABERTO',
+  },
+  {
+    id: '00001',
+    title: 'Computador não liga',
+    service: 'Manutenção de Hardware',
+    price: 'R$ 150,00',
+    updatedAt: '12/04/25 09:01',
+    client: 'Aline Souza',
+    status: 'ABERTO',
+  },
+  {
+    id: '00005',
+    title: 'Meu fone não conecta',
+    service: 'Suporte de Software',
+    price: 'R$ 80,00',
+    updatedAt: '11/04/25 15:16',
+    client: 'Suzane Moura',
+    status: 'ENCERRADO',
+  },
+]
+
+const profileBackgroundStatusIconConfig: Record<
+  TicketStatus,
+  {
+    icon: LucideIcon
+    className: string
+  }
+> = {
+  ABERTO: {
+    icon: CircleHelp,
+    className: 'bg-pink-100 text-pink-600 ring-pink-200',
+  },
+  EM_ATENDIMENTO: {
+    icon: Clock,
+    className: 'bg-blue-100 text-blue-600 ring-blue-200',
+  },
+  ENCERRADO: {
+    icon: CheckCircle,
+    className: 'bg-green-100 text-green-700 ring-green-200',
+  },
+}
+
+function getInitials(name: string) {
+  return name
+    .split(' ')
+    .map((word) => word[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+}
+
+function getTicketAction(ticket: ProfileBackgroundTicket) {
+  if (ticket.status === 'EM_ATENDIMENTO') {
+    return {
+      label: 'Encerrar',
+      icon: CheckCircle,
+    }
+  }
+
+  return {
+    label: 'Iniciar',
+    icon: PlayCircle,
+  }
+}
+
+function TechnicianProfileBackgroundCard({
+  ticket,
+}: {
+  ticket: ProfileBackgroundTicket
+}) {
+  const action = getTicketAction(ticket)
+  const ActionIcon = action.icon
+  const statusConfig = profileBackgroundStatusIconConfig[ticket.status]
+  const StatusIcon = statusConfig.icon
+  const canChangeStatus = ticket.status !== 'ENCERRADO'
+
+  return (
+    <article className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+      <div className="flex items-start justify-between gap-4">
+        <span className="text-base font-bold text-slate-400">{ticket.id}</span>
+
+        <div className="flex items-center gap-2">
+          <span className="inline-flex size-9 items-center justify-center rounded-md bg-slate-200 text-slate-700">
+            <Pencil size={18} strokeWidth={2} />
+          </span>
+
+          {canChangeStatus && (
+            <span className="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-[#1E2024] px-4 text-sm font-bold text-white">
+              <ActionIcon size={18} strokeWidth={2.2} />
+              {action.label}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-3">
+        <h2 className="text-xl font-bold leading-tight text-[#1E2024]">
+          {ticket.title}
+        </h2>
+        <p className="mt-1 text-base leading-tight text-[#1E2024]">
+          {ticket.service}
+        </p>
+      </div>
+
+      <div className="mt-6 flex items-end justify-between gap-4">
+        <span className="text-base font-medium text-[#1E2024]">
+          {ticket.updatedAt}
+        </span>
+        <strong className="text-base font-bold text-[#1E2024]">
+          {ticket.price}
+        </strong>
+      </div>
+
+      <div className="mt-5 flex items-center justify-between border-t border-slate-200 pt-5">
+        <div className="flex items-center gap-3">
+          <span className="flex size-8 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">
+            {getInitials(ticket.client)}
+          </span>
+          <span className="text-base font-bold text-[#1E2024]">
+            {ticket.client}
+          </span>
+        </div>
+
+        <span
+          className={[
+            'inline-flex size-9 items-center justify-center rounded-full ring-1',
+            statusConfig.className,
+          ].join(' ')}
+        >
+          <StatusIcon size={20} strokeWidth={2.4} />
+        </span>
+      </div>
+    </article>
+  )
+}
+
 function TechnicianProfileBackground() {
   return (
-    <div className="w-full max-w-[1110px] opacity-40">
+    <div className="pointer-events-none w-full max-w-[1110px] opacity-40">
       <h1 className="text-xl font-bold text-blue-700 lg:text-2xl">
         Meus chamados
       </h1>
 
-      <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <article
-            key={index}
-            className="min-h-[210px] rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-          >
-            <span className="text-base font-bold text-slate-400">00003</span>
+      <div className="mt-7 grid gap-8">
+        {profileBackgroundSections.map((section) => {
+          const tickets = profileBackgroundTickets.filter(
+            (ticket) => ticket.status === section.status,
+          )
 
-            <div className="mt-4">
-              <h2 className="text-xl font-bold leading-tight text-[#1E2024]">
-                Rede lenta
-              </h2>
-              <p className="mt-1 text-base leading-tight text-[#1E2024]">
-                Instalação de Rede
-              </p>
-            </div>
+          if (tickets.length === 0) {
+            return null
+          }
 
-            <div className="mt-8 border-t border-slate-200 pt-5">
-              <div className="flex items-center gap-3">
-                <span className="flex size-8 items-center justify-center rounded-full bg-blue-700 text-xs font-bold text-white">
-                  AC
-                </span>
-                <span className="text-base font-bold text-[#1E2024]">
-                  André Costa
-                </span>
+          return (
+            <section key={section.status}>
+              <div className="mb-4">
+                <TicketStatusBadge status={section.status} />
               </div>
-            </div>
-          </article>
-        ))}
+
+              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                {tickets.map((ticket) => (
+                  <TechnicianProfileBackgroundCard
+                    key={ticket.id}
+                    ticket={ticket}
+                  />
+                ))}
+              </div>
+            </section>
+          )
+        })}
       </div>
     </div>
   )
