@@ -1,5 +1,4 @@
-import { Pencil, Plus, X } from 'lucide-react'
-import { useState, type FormEvent } from 'react'
+import { Pencil, Plus } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 import { AdminLayout } from '../../components/layout/admin-layout'
@@ -48,26 +47,6 @@ function getInitials(name: string) {
 }
 
 export function TechniciansListPage() {
-  const [isTechnicianModalOpen, setIsTechnicianModalOpen] = useState(false)
-  const [selectedTechnician, setSelectedTechnician] =
-    useState<Technician | null>(null)
-
-  const isEditingTechnician = selectedTechnician !== null
-
-  function openEditModal(technician: Technician) {
-    setSelectedTechnician(technician)
-    setIsTechnicianModalOpen(true)
-  }
-
-  function closeTechnicianModal() {
-    setIsTechnicianModalOpen(false)
-    setSelectedTechnician(null)
-  }
-
-  function handleTechnicianSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-  }
-
   return (
     <AdminLayout>
       <div>
@@ -141,14 +120,13 @@ export function TechniciansListPage() {
                   </td>
 
                   <td className="px-4 py-4 text-right">
-                    <button
-                      type="button"
+                    <Link
+                      to={`/admin/technicians/${technician.id}/edit`}
                       aria-label={`Editar técnico ${technician.name}`}
-                      onClick={() => openEditModal(technician)}
                       className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
                     >
                       <Pencil size={14} strokeWidth={2.2} />
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
@@ -197,150 +175,18 @@ export function TechniciansListPage() {
                     )}
                   </div>
 
-                  <button
-                    type="button"
+                  <Link
+                    to={`/admin/technicians/${technician.id}/edit`}
                     aria-label={`Editar técnico ${technician.name}`}
-                    onClick={() => openEditModal(technician)}
                     className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
                   >
                     <Pencil size={14} strokeWidth={2.2} />
-                  </button>
+                  </Link>
                 </article>
               )
             })}
           </div>
         </section>
-
-        {isTechnicianModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 py-6">
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="technician-modal-title"
-              className="w-full max-w-md rounded-2xl bg-white p-5 shadow-xl"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h2
-                    id="technician-modal-title"
-                    className="text-lg font-bold text-slate-950"
-                  >
-                    {isEditingTechnician ? 'Editar técnico' : 'Novo técnico'}
-                  </h2>
-                  <p className="mt-1 text-sm text-slate-500">
-                    {isEditingTechnician
-                      ? 'Atualize as informações básicas do técnico.'
-                      : 'Cadastre as informações básicas do técnico.'}
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  aria-label="Fechar modal de técnico"
-                  onClick={closeTechnicianModal}
-                  className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
-                >
-                  <X size={18} strokeWidth={2.2} />
-                </button>
-              </div>
-
-              <form onSubmit={handleTechnicianSubmit} className="mt-6">
-                <div className="grid gap-4">
-                  <div>
-                    <label
-                      htmlFor="technician-name"
-                      className="text-xs font-bold text-slate-500"
-                    >
-                      Nome
-                    </label>
-                    <input
-                      id="technician-name"
-                      name="name"
-                      type="text"
-                      defaultValue={selectedTechnician?.name ?? ''}
-                      placeholder="Digite o nome completo"
-                      className="mt-2 h-11 w-full rounded-md border border-slate-200 px-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="technician-email"
-                      className="text-xs font-bold text-slate-500"
-                    >
-                      E-mail
-                    </label>
-                    <input
-                      id="technician-email"
-                      name="email"
-                      type="email"
-                      defaultValue={selectedTechnician?.email ?? ''}
-                      placeholder="exemplo@mail.com"
-                      className="mt-2 h-11 w-full rounded-md border border-slate-200 px-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="technician-password"
-                      className="text-xs font-bold text-slate-500"
-                    >
-                      Senha
-                    </label>
-                    <input
-                      id="technician-password"
-                      name="password"
-                      type="password"
-                      placeholder={
-                        isEditingTechnician
-                          ? 'Deixe em branco para manter a senha'
-                          : 'Digite uma senha'
-                      }
-                      className="mt-2 h-11 w-full rounded-md border border-slate-200 px-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="technician-availability"
-                      className="text-xs font-bold text-slate-500"
-                    >
-                      Disponibilidade
-                    </label>
-                    <input
-                      id="technician-availability"
-                      name="availability"
-                      type="text"
-                      defaultValue={selectedTechnician?.availability.join(', ') ?? ''}
-                      placeholder="Ex: 08:00, 09:00, 10:00"
-                      className="mt-2 h-11 w-full rounded-md border border-slate-200 px-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
-                    />
-                    <span className="mt-2 block text-xs text-slate-500">
-                      Separe os horários por vírgula.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                  <button
-                    type="button"
-                    onClick={closeTechnicianModal}
-                    className="h-10 cursor-pointer rounded-md bg-slate-200 px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-300"
-                  >
-                    Cancelar
-                  </button>
-
-                  <button
-                    type="submit"
-                    className="h-10 cursor-pointer rounded-md bg-zinc-900 px-4 text-sm font-semibold text-white transition hover:bg-zinc-800"
-                  >
-                    {isEditingTechnician ? 'Salvar alterações' : 'Salvar'}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
       </div>
     </AdminLayout>
   )

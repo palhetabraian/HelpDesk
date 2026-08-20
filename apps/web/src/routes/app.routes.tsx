@@ -18,6 +18,10 @@ export function AppRoutes() {
         <Route path="/admin/tickets/:ticketId" element={<TicketDetailsPage />} />
         <Route path="/admin/technicians" element={<TechniciansListPage />} />
         <Route path="/admin/technicians/new" element={<TechnicianProfilePage />} />
+        <Route
+          path="/admin/technicians/:technicianId/edit"
+          element={<TechnicianProfilePage />}
+        />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
