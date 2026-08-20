@@ -205,7 +205,7 @@ export function ClientsListPage() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="client-modal-title"
-              className="w-full max-w-[250px] overflow-hidden rounded-lg bg-white shadow-xl sm:max-w-[360px]"
+              className="w-full max-w-[250px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl sm:max-w-[360px]"
             >
               <div className="flex h-12 items-center justify-between border-b border-slate-100 px-4">
                 <h2
@@ -281,7 +281,7 @@ export function ClientsListPage() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="delete-client-modal-title"
-              className="w-full max-w-[250px] rounded-lg bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
+              className="w-full max-w-[250px] rounded-lg border border-slate-200 bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
             >
               <h2
                 id="delete-client-modal-title"

@@ -268,7 +268,7 @@ export function ServicesListPage() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="service-modal-title"
-              className="w-full max-w-[250px] rounded-lg bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
+              className="w-full max-w-[250px] rounded-lg border border-slate-200 bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
             >
               <h2
                 id="service-modal-title"
@@ -341,7 +341,7 @@ export function ServicesListPage() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="service-status-modal-title"
-              className="w-full max-w-[280px] rounded-lg bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
+              className="w-full max-w-[280px] rounded-lg border border-slate-200 bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
             >
               <h2
                 id="service-status-modal-title"
