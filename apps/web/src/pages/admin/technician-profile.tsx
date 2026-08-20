@@ -1,8 +1,8 @@
-import { ArrowLeft } from 'lucide-react'
-import { useState, type FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react';
+import { useState, type FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { AdminLayout } from '../../components/layout/admin-layout'
+import { AdminLayout } from '../../components/layout/admin-layout';
 
 const scheduleGroups = [
   {
@@ -17,7 +17,7 @@ const scheduleGroups = [
     label: 'NOITE',
     times: ['19:00', '20:00', '21:00', '22:00', '23:00'],
   },
-] as const
+] as const;
 
 const defaultCommercialHours = [
   '08:00',
@@ -28,31 +28,31 @@ const defaultCommercialHours = [
   '15:00',
   '16:00',
   '17:00',
-]
+];
 
 export function TechnicianProfilePage() {
-  const navigate = useNavigate()
-  const [selectedHours, setSelectedHours] = useState(defaultCommercialHours)
+  const navigate = useNavigate();
+  const [selectedHours, setSelectedHours] = useState(defaultCommercialHours);
 
   function handleToggleHour(hour: string) {
     setSelectedHours((currentHours) => {
       if (currentHours.includes(hour)) {
-        return currentHours.filter((currentHour) => currentHour !== hour)
+        return currentHours.filter((currentHour) => currentHour !== hour);
       }
 
-      return [...currentHours, hour]
-    })
+      return [...currentHours, hour];
+    });
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    event.preventDefault();
   }
 
   return (
     <AdminLayout>
       <form
         onSubmit={handleSubmit}
-        className="mx-auto w-full max-w-[820px] lg:pt-6 xl:max-w-[880px]"
+        className="mx-auto w-full max-w-[820px] md:max-w-[960px] lg:max-w-[820px] lg:pt-6 xl:max-w-[880px]"
       >
         <button
           type="button"
@@ -63,33 +63,31 @@ export function TechnicianProfilePage() {
           Voltar
         </button>
 
-        <div className="mt-2 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <div className="mt-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
           <h1 className="text-2xl font-bold text-blue-700">
             Perfil de técnico
           </h1>
 
-          <div className="grid w-full grid-cols-2 gap-2 sm:w-auto sm:flex">
+          <div className="grid w-full grid-cols-2 gap-2 md:w-auto md:flex">
             <Link
               to="/admin/technicians"
-              className="flex h-9 cursor-pointer items-center justify-center rounded-md bg-slate-200 px-4 text-xs font-bold text-slate-900 transition hover:bg-slate-300 sm:px-5"
+              className="flex h-9 cursor-pointer items-center justify-center rounded-md bg-slate-200 px-4 text-xs font-bold text-slate-900 transition hover:bg-slate-300 md:px-5"
             >
               Cancelar
             </Link>
 
             <button
               type="submit"
-              className="h-9 cursor-pointer rounded-md bg-zinc-900 px-4 text-xs font-bold text-white transition hover:bg-zinc-800 sm:px-5"
+              className="h-9 cursor-pointer rounded-md bg-zinc-900 px-4 text-xs font-bold text-white transition hover:bg-zinc-800 md:px-5"
             >
               Salvar
             </button>
           </div>
         </div>
 
-        <div className="mt-5 grid items-start gap-5 lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
-          <section className="self-start rounded-lg border border-slate-200 bg-white p-5">
-            <h2 className="text-lg font-bold text-slate-900">
-              Dados pessoais
-            </h2>
+        <div className="mt-5 grid items-start gap-5 md:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
+          <section className="self-start rounded-lg border border-slate-200 bg-white p-4 sm:p-5">
+            <h2 className="text-lg font-bold text-slate-900">Dados pessoais</h2>
             <p className="mt-1 text-xs leading-relaxed text-slate-500">
               Defina as informações do perfil de técnico
             </p>
@@ -148,7 +146,7 @@ export function TechnicianProfilePage() {
             </div>
           </section>
 
-          <section className="self-start rounded-lg border border-slate-200 bg-white p-5">
+          <section className="self-start rounded-lg border border-slate-200 bg-white p-4 sm:p-5">
             <h2 className="text-lg font-bold text-slate-900">
               Horários de atendimento
             </h2>
@@ -166,7 +164,7 @@ export function TechnicianProfilePage() {
 
                   <div className="mt-2.5 flex flex-wrap gap-2">
                     {group.times.map((time) => {
-                      const isSelected = selectedHours.includes(time)
+                      const isSelected = selectedHours.includes(time);
 
                       return (
                         <button
@@ -182,7 +180,7 @@ export function TechnicianProfilePage() {
                         >
                           {time}
                         </button>
-                      )
+                      );
                     })}
                   </div>
                 </div>
@@ -192,5 +190,5 @@ export function TechnicianProfilePage() {
         </div>
       </form>
     </AdminLayout>
-  )
+  );
 }
