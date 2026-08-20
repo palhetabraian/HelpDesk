@@ -48,6 +48,7 @@ function getInitials(name: string) {
 
 export function ClientsListPage() {
   const [selectedClient, setSelectedClient] = useState<Client | null>(null)
+  const [clientToDelete, setClientToDelete] = useState<Client | null>(null)
 
   function openClientModal(client: Client) {
     setSelectedClient(client)
@@ -57,8 +58,20 @@ export function ClientsListPage() {
     setSelectedClient(null)
   }
 
+  function openDeleteModal(client: Client) {
+    setClientToDelete(client)
+  }
+
+  function closeDeleteModal() {
+    setClientToDelete(null)
+  }
+
   function handleClientSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+  }
+
+  function handleDeleteClient() {
+    closeDeleteModal()
   }
 
   return (
@@ -110,6 +123,7 @@ export function ClientsListPage() {
                     <div className="flex justify-end gap-2">
                       <button
                         type="button"
+                        onClick={() => openDeleteModal(client)}
                         aria-label={`Excluir cliente ${client.name}`}
                         className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md bg-red-50 text-red-600 transition hover:bg-red-100"
                       >
@@ -164,6 +178,7 @@ export function ClientsListPage() {
                 <div className="flex justify-end gap-2">
                   <button
                     type="button"
+                    onClick={() => openDeleteModal(client)}
                     aria-label={`Excluir cliente ${client.name}`}
                     className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md bg-red-50 text-red-600 transition hover:bg-red-100"
                   >
@@ -256,6 +271,51 @@ export function ClientsListPage() {
                   Salvar
                 </button>
               </form>
+            </div>
+          </div>
+        )}
+
+        {clientToDelete && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 px-4 py-6">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="delete-client-modal-title"
+              className="w-full max-w-[250px] rounded-lg bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
+            >
+              <h2
+                id="delete-client-modal-title"
+                className="text-base font-bold text-slate-900"
+              >
+                Excluir cliente
+              </h2>
+
+              <p className="mt-4 text-sm leading-relaxed text-slate-700">
+                Deseja realmente excluir {clientToDelete.name}?
+              </p>
+
+              <p className="mt-3 text-xs leading-relaxed text-slate-500">
+                Ao excluir, todos os chamados deste cliente serão removidos e
+                esta ação não poderá ser desfeita.
+              </p>
+
+              <div className="mt-6 grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={closeDeleteModal}
+                  className="h-9 cursor-pointer rounded-md bg-slate-200 text-xs font-bold text-slate-900 transition hover:bg-slate-300"
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleDeleteClient}
+                  className="h-9 cursor-pointer rounded-md bg-red-600 text-xs font-bold text-white transition hover:bg-red-700"
+                >
+                  Sim, excluir
+                </button>
+              </div>
             </div>
           </div>
         )}
