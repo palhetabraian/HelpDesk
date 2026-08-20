@@ -1,4 +1,5 @@
 import { Plus } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
 
 import { AdminLayout } from '../../components/layout/admin-layout'
 
@@ -45,6 +46,21 @@ function getStatusClasses(isActive: boolean) {
 }
 
 export function ServicesListPage() {
+  const [isCreateServiceModalOpen, setIsCreateServiceModalOpen] =
+    useState(false)
+
+  function openCreateServiceModal() {
+    setIsCreateServiceModalOpen(true)
+  }
+
+  function closeCreateServiceModal() {
+    setIsCreateServiceModalOpen(false)
+  }
+
+  function handleCreateServiceSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+  }
+
   return (
     <AdminLayout>
       <div>
@@ -55,6 +71,7 @@ export function ServicesListPage() {
 
           <button
             type="button"
+            onClick={openCreateServiceModal}
             aria-label="Cadastrar novo serviço"
             className="flex size-10 cursor-pointer items-center justify-center rounded-md bg-zinc-900 text-white transition hover:bg-zinc-800 lg:h-10 lg:w-auto lg:gap-2 lg:px-5 lg:text-sm lg:font-semibold"
           >
@@ -167,6 +184,77 @@ export function ServicesListPage() {
             ))}
           </div>
         </section>
+
+        {isCreateServiceModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 px-4 py-6">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="service-modal-title"
+              className="w-full max-w-[250px] rounded-lg bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
+            >
+              <h2
+                id="service-modal-title"
+                className="text-base font-bold text-slate-900"
+              >
+                Cadastro de serviço
+              </h2>
+
+              <form onSubmit={handleCreateServiceSubmit} className="mt-6">
+                <div className="grid gap-5">
+                  <div>
+                    <label
+                      htmlFor="service-title"
+                      className="text-[10px] font-bold uppercase tracking-[0.08em] text-slate-600"
+                    >
+                      Título
+                    </label>
+                    <input
+                      id="service-title"
+                      name="title"
+                      type="text"
+                      placeholder="Nome do serviço"
+                      className="mt-2 w-full border-0 border-b border-slate-200 bg-transparent pb-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="service-price"
+                      className="text-[10px] font-bold uppercase tracking-[0.08em] text-slate-600"
+                    >
+                      Valor
+                    </label>
+                    <input
+                      id="service-price"
+                      name="price"
+                      type="text"
+                      placeholder="R$ 0,00"
+                      className="mt-2 w-full border-0 border-b border-slate-200 bg-transparent pb-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-700"
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-6 grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={closeCreateServiceModal}
+                    className="h-9 cursor-pointer rounded-md bg-slate-200 text-xs font-bold text-slate-900 transition hover:bg-slate-300"
+                  >
+                    Cancelar
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="h-9 cursor-pointer rounded-md bg-zinc-900 text-xs font-bold text-white transition hover:bg-zinc-800"
+                  >
+                    Salvar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </AdminLayout>
   )
