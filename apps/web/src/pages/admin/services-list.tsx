@@ -1,4 +1,4 @@
-import { Ban, CircleCheck, Pencil, Plus } from 'lucide-react'
+import { Ban, CircleCheck, Pencil, Plus, X } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 
 import { AdminLayout } from '../../components/layout/admin-layout'
@@ -268,17 +268,28 @@ export function ServicesListPage() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="service-modal-title"
-              className="w-full max-w-[250px] rounded-lg border border-slate-200 bg-white p-4 shadow-xl sm:max-w-[360px] sm:p-5"
+              className="w-full max-w-[250px] overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl sm:max-w-[360px]"
             >
-              <h2
-                id="service-modal-title"
-                className="text-base font-bold text-slate-900"
-              >
-                {serviceModalTitle}
-              </h2>
+              <div className="flex h-14 items-center justify-between border-b border-slate-100 px-4 sm:h-16 sm:px-6">
+                <h2
+                  id="service-modal-title"
+                  className="text-base font-bold text-slate-900"
+                >
+                  {serviceModalTitle}
+                </h2>
 
-              <form onSubmit={handleServiceSubmit} className="mt-6">
-                <div className="grid gap-5">
+                <button
+                  type="button"
+                  onClick={closeServiceModal}
+                  aria-label="Fechar modal de serviço"
+                  className="flex size-8 cursor-pointer items-center justify-center rounded-md text-slate-400 transition hover:bg-slate-100 hover:text-slate-900"
+                >
+                  <X size={18} strokeWidth={2.2} />
+                </button>
+              </div>
+
+              <form onSubmit={handleServiceSubmit}>
+                <div className="grid gap-5 px-4 py-6 sm:px-6">
                   <div>
                     <label
                       htmlFor="service-title"
@@ -314,18 +325,10 @@ export function ServicesListPage() {
                   </div>
                 </div>
 
-                <div className="mt-6 grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={closeServiceModal}
-                    className="h-9 cursor-pointer rounded-md bg-slate-200 text-xs font-bold text-slate-900 transition hover:bg-slate-300"
-                  >
-                    Cancelar
-                  </button>
-
+                <div className="border-t border-slate-100 px-4 py-4 sm:px-6">
                   <button
                     type="submit"
-                    className="h-9 cursor-pointer rounded-md bg-zinc-900 text-xs font-bold text-white transition hover:bg-zinc-800"
+                    className="h-10 w-full cursor-pointer rounded-md bg-zinc-900 text-sm font-semibold text-white transition hover:bg-zinc-800"
                   >
                     Salvar
                   </button>
