@@ -1,5 +1,5 @@
-import { Pencil, Plus, X } from 'lucide-react'
-import { useState } from 'react'
+import { Pencil, Plus } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 import { AdminLayout } from '../../components/layout/admin-layout'
 
@@ -47,16 +47,6 @@ function getInitials(name: string) {
 }
 
 export function TechniciansListPage() {
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-
-  function openCreateModal() {
-    setIsCreateModalOpen(true)
-  }
-
-  function closeCreateModal() {
-    setIsCreateModalOpen(false)
-  }
-
   return (
     <AdminLayout>
       <div>
@@ -65,18 +55,17 @@ export function TechniciansListPage() {
             Técnicos
           </h1>
 
-          <button
-            type="button"
+          <Link
+            to="/admin/technicians/new"
             aria-label="Cadastrar novo técnico"
-            onClick={openCreateModal}
             className="flex size-10 cursor-pointer items-center justify-center rounded-md bg-zinc-900 text-white transition hover:bg-zinc-800 lg:h-10 lg:w-auto lg:gap-2 lg:px-5 lg:text-sm lg:font-semibold"
           >
             <Plus size={18} strokeWidth={2.4} />
             <span className="hidden lg:inline">Novo</span>
-          </button>
+          </Link>
         </div>
 
-        <section className="mt-6 hidden max-w-[1120px] overflow-hidden rounded-xl border border-slate-200 bg-white lg:block">
+        <section className="mt-6 hidden w-full overflow-hidden rounded-xl border border-slate-200 bg-white lg:block">
           <table className="w-full border-collapse text-left">
             <thead className="border-b border-slate-200 bg-slate-50">
               <tr>
@@ -131,13 +120,13 @@ export function TechniciansListPage() {
                   </td>
 
                   <td className="px-4 py-4 text-right">
-                    <button
-                      type="button"
+                    <Link
+                      to={`/admin/technicians/${technician.id}/edit`}
                       aria-label={`Editar técnico ${technician.name}`}
                       className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
                     >
                       <Pencil size={14} strokeWidth={2.2} />
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
@@ -186,77 +175,18 @@ export function TechniciansListPage() {
                     )}
                   </div>
 
-                  <button
-                    type="button"
+                  <Link
+                    to={`/admin/technicians/${technician.id}/edit`}
                     aria-label={`Editar técnico ${technician.name}`}
                     className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-slate-700 transition hover:bg-slate-300 hover:text-slate-950"
                   >
                     <Pencil size={14} strokeWidth={2.2} />
-                  </button>
+                  </Link>
                 </article>
               )
             })}
           </div>
         </section>
-
-        {isCreateModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 px-4 py-6">
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="create-technician-title"
-              className="w-full max-w-md rounded-2xl bg-white p-5 shadow-xl"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <h2
-                    id="create-technician-title"
-                    className="text-lg font-bold text-slate-950"
-                  >
-                    Novo técnico
-                  </h2>
-                  <p className="mt-1 text-sm text-slate-500">
-                    Cadastre as informações básicas do técnico.
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  aria-label="Fechar modal de cadastro de técnico"
-                  onClick={closeCreateModal}
-                  className="inline-flex size-8 cursor-pointer items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
-                >
-                  <X size={18} strokeWidth={2.2} />
-                </button>
-              </div>
-
-              <div className="mt-6 rounded-xl border border-dashed border-slate-200 bg-slate-50 p-4">
-                <p className="text-sm leading-relaxed text-slate-600">
-                  O formulário será montado na próxima etapa. Por enquanto, este
-                  modal valida apenas a abertura, fechamento e estrutura visual
-                  do fluxo de cadastro.
-                </p>
-              </div>
-
-              <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-                <button
-                  type="button"
-                  onClick={closeCreateModal}
-                  className="h-10 cursor-pointer rounded-md bg-slate-200 px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-300"
-                >
-                  Cancelar
-                </button>
-
-                <button
-                  type="button"
-                  className="h-10 cursor-pointer rounded-md bg-zinc-900 px-4 text-sm font-semibold text-white transition hover:bg-zinc-800"
-                >
-                  Salvar
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </AdminLayout>
   )
