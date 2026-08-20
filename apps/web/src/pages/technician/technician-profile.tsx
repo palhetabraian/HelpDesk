@@ -1,4 +1,5 @@
-import { Trash2, Upload, X } from 'lucide-react'
+import { ArrowLeft, Trash2, Upload, X } from 'lucide-react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { TechnicianLayout } from '../../components/layout/technician-layout'
@@ -53,9 +54,19 @@ function TechnicianProfileBackground() {
 
 export function TechnicianProfilePage() {
   const navigate = useNavigate()
+  const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
+    useState(false)
 
   function closeProfile() {
     navigate('/technician/tickets')
+  }
+
+  function openChangePasswordModal() {
+    setIsChangePasswordModalOpen(true)
+  }
+
+  function closeChangePasswordModal() {
+    setIsChangePasswordModalOpen(false)
   }
 
   return (
@@ -165,6 +176,7 @@ export function TechnicianProfilePage() {
 
                       <button
                         type="button"
+                        onClick={openChangePasswordModal}
                         className="h-9 cursor-pointer rounded-md bg-slate-200 px-4 text-sm font-bold text-[#1E2024] transition hover:bg-slate-300"
                       >
                         Alterar
@@ -204,6 +216,97 @@ export function TechnicianProfilePage() {
               </div>
             </form>
           </section>
+
+          {isChangePasswordModalOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/50 px-4 py-6 lg:left-[200px]">
+              <section
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="change-password-title"
+                className="flex h-auto max-h-[calc(100dvh-32px)] w-full max-w-[360px] flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl sm:max-w-[470px] lg:max-w-[650px]"
+              >
+                <header className="flex h-20 items-center justify-between border-b border-slate-200 px-7 sm:px-9">
+                  <div className="flex items-center gap-5">
+                    <button
+                      type="button"
+                      onClick={closeChangePasswordModal}
+                      aria-label="Voltar para perfil"
+                      className="flex size-8 cursor-pointer items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+                    >
+                      <ArrowLeft size={26} strokeWidth={2.1} />
+                    </button>
+
+                    <h2
+                      id="change-password-title"
+                      className="text-[26px] font-bold text-[#1E2024] sm:text-[30px]"
+                    >
+                      Alterar senha
+                    </h2>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={closeChangePasswordModal}
+                    aria-label="Fechar alteração de senha"
+                    className="flex size-8 cursor-pointer items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+                  >
+                    <X size={28} strokeWidth={2.1} />
+                  </button>
+                </header>
+
+                <form>
+                  <div className="grid gap-8 px-7 py-9 sm:px-9 sm:py-10">
+                    <div>
+                      <label
+                        htmlFor="current-password"
+                        className="text-sm font-bold uppercase tracking-[0.08em] text-slate-600"
+                      >
+                        Senha atual
+                      </label>
+
+                      <input
+                        id="current-password"
+                        name="currentPassword"
+                        type="password"
+                        placeholder="Digite sua senha atual"
+                        className="mt-5 w-full border-0 border-b border-slate-200 bg-transparent pb-4 text-[26px] text-[#1E2024] outline-none placeholder:text-slate-400 focus:border-blue-700 sm:text-[30px]"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="new-password"
+                        className="text-sm font-bold uppercase tracking-[0.08em] text-slate-600"
+                      >
+                        Nova senha
+                      </label>
+
+                      <input
+                        id="new-password"
+                        name="newPassword"
+                        type="password"
+                        placeholder="Digite sua nova senha"
+                        className="mt-5 w-full border-0 border-b border-slate-200 bg-transparent pb-4 text-[26px] text-[#1E2024] outline-none placeholder:text-slate-400 focus:border-blue-700 sm:text-[30px]"
+                      />
+
+                      <p className="mt-4 text-xl italic text-slate-400">
+                        Mínimo de 6 dígitos
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-200 px-7 py-6 sm:px-9">
+                    <button
+                      type="button"
+                      className="h-16 w-full cursor-pointer rounded-md bg-[#1E2024] text-2xl font-medium text-white transition hover:bg-zinc-800"
+                    >
+                      Salvar
+                    </button>
+                  </div>
+                </form>
+              </section>
+            </div>
+          )}
         </div>
       </div>
     </TechnicianLayout>
