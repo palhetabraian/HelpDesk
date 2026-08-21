@@ -69,6 +69,7 @@ export function ClientLayout({ children }: ClientLayoutProps) {
     useState(false)
 
   function openMobileMenu() {
+    closeUserOptions()
     setIsMobileMenuOpen(true)
   }
 
@@ -91,9 +92,11 @@ export function ClientLayout({ children }: ClientLayoutProps) {
 
   function closeProfileModal() {
     setIsProfileModalOpen(false)
+    setIsChangePasswordModalOpen(false)
   }
 
   function openChangePasswordModal() {
+    closeUserOptions()
     setIsChangePasswordModalOpen(true)
   }
 
