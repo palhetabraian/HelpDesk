@@ -22,15 +22,25 @@ const navigationItems: NavigationItem[] = [
   },
 ]
 
-function CreateTicketAction() {
+type CreateTicketActionProps = {
+  onClick?: () => void
+}
+
+function CreateTicketAction({ onClick }: CreateTicketActionProps) {
   return (
-    <button
-      type="button"
-      className="flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-white"
+    <NavLink
+      to="/client/tickets/new"
+      onClick={onClick}
+      className={({ isActive }) =>
+        [
+          'flex cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-medium transition hover:bg-slate-900 hover:text-white',
+          isActive ? 'bg-blue-700 text-white' : 'text-slate-400',
+        ].join(' ')
+      }
     >
       <Plus size={18} strokeWidth={2.2} />
       Criar chamado
-    </button>
+    </NavLink>
   )
 }
 
@@ -159,7 +169,7 @@ export function ClientLayout({ children }: ClientLayoutProps) {
                   )
                 })}
 
-                <CreateTicketAction />
+                <CreateTicketAction onClick={closeMobileMenu} />
               </nav>
 
               <div className="mt-auto flex items-center gap-3 border-t border-slate-800 pt-5">
