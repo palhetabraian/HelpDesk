@@ -138,19 +138,19 @@ export function ClientTicketsListPage() {
                 <th className="w-[8%] px-4 py-5 text-sm font-bold text-slate-500">
                   Id
                 </th>
-                <th className="w-[22%] px-4 py-5 text-sm font-bold text-slate-500">
+                <th className="w-[20%] px-4 py-5 text-sm font-bold text-slate-500">
                   Título
                 </th>
-                <th className="w-[20%] px-4 py-5 text-sm font-bold text-slate-500">
+                <th className="w-[18%] px-4 py-5 text-sm font-bold text-slate-500">
                   Serviço
                 </th>
                 <th className="w-[13%] px-4 py-5 text-sm font-bold text-slate-500">
                   Valor total
                 </th>
-                <th className="w-[16%] px-4 py-5 text-sm font-bold text-slate-500">
+                <th className="w-[14%] px-4 py-5 text-sm font-bold text-slate-500">
                   Técnico
                 </th>
-                <th className="w-[9%] px-4 py-5 text-sm font-bold text-slate-500">
+                <th className="w-[15%] px-4 py-5 text-sm font-bold text-slate-500">
                   Status
                 </th>
                 <th className="w-16 px-4 py-5 text-right">
@@ -194,7 +194,7 @@ export function ClientTicketsListPage() {
                     </div>
                   </td>
 
-                  <td className="px-4 py-4">
+                  <td className="px-4 py-4 whitespace-nowrap">
                     <TicketStatusBadge status={ticket.status} />
                   </td>
 
