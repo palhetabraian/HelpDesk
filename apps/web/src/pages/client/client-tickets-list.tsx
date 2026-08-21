@@ -5,6 +5,7 @@ import {
   Eye,
   type LucideIcon,
 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 import { ClientLayout } from '../../components/layout/client-layout'
 import { TicketStatusBadge } from '../../components/ui/ticket-status-badge'
@@ -116,10 +117,16 @@ function StatusIconBadge({ status }: { status: TicketStatus }) {
 }
 
 export function ClientTicketsListPage() {
+  const navigate = useNavigate()
+
   const currencyFormatter = new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL',
   })
+
+  function handleViewTicket(ticketId: string) {
+    navigate(`/client/tickets/${ticketId}`)
+  }
 
   return (
     <ClientLayout>
@@ -201,6 +208,7 @@ export function ClientTicketsListPage() {
                   <td className="px-4 py-4 text-right">
                     <button
                       type="button"
+                      onClick={() => handleViewTicket(ticket.id)}
                       aria-label={`Visualizar chamado ${ticket.id}`}
                       className="inline-flex size-9 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-[#1E2024] transition hover:bg-slate-300"
                     >
@@ -239,6 +247,7 @@ export function ClientTicketsListPage() {
 
                 <button
                   type="button"
+                  onClick={() => handleViewTicket(ticket.id)}
                   aria-label={`Visualizar chamado ${ticket.id}`}
                   className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-[#1E2024] transition hover:bg-slate-300"
                 >
