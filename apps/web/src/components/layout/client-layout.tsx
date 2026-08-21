@@ -46,7 +46,7 @@ export function ClientLayout({ children }: ClientLayoutProps) {
   }
 
   return (
-    <div className="min-h-dvh bg-slate-50 text-slate-900 lg:flex">
+    <div className="min-h-dvh bg-zinc-950 text-slate-900 lg:flex lg:bg-slate-50">
       <aside className="hidden w-[200px] shrink-0 border-r border-slate-800 bg-zinc-950 px-6 py-8 lg:flex lg:min-h-dvh lg:flex-col">
         <img src={logoHelpDesk} alt="HelpDesk" className="h-auto w-36" />
 
@@ -91,7 +91,7 @@ export function ClientLayout({ children }: ClientLayoutProps) {
       </aside>
 
       <div className="flex min-h-dvh flex-1 flex-col">
-        <header className="flex h-20 items-center justify-between bg-zinc-950 px-5 lg:hidden">
+        <header className="flex h-[116px] items-start justify-between bg-zinc-950 px-6 pt-7 lg:hidden">
           <button
             type="button"
             aria-label="Abrir menu"
@@ -101,7 +101,7 @@ export function ClientLayout({ children }: ClientLayoutProps) {
             <Menu size={22} strokeWidth={2.2} />
           </button>
 
-          <img src={logoHelpDesk} alt="HelpDesk" className="h-auto w-36" />
+          <img src={logoHelpDesk} alt="HelpDesk" className="h-auto w-32" />
 
           <div className="flex size-10 items-center justify-center rounded-full bg-blue-700 text-sm font-bold text-white">
             UC
@@ -180,7 +180,7 @@ export function ClientLayout({ children }: ClientLayoutProps) {
           </div>
         )}
 
-        <main className="flex-1 px-5 py-6 sm:px-8 lg:px-12 lg:py-12">
+        <main className="flex-1 rounded-t-2xl bg-slate-50 px-5 py-6 sm:px-8 lg:rounded-none lg:bg-transparent lg:px-12 lg:py-12">
           {children}
         </main>
       </div>

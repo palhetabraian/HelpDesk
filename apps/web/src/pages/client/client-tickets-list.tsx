@@ -105,12 +105,12 @@ function StatusIconBadge({ status }: { status: TicketStatus }) {
   return (
     <span
       className={[
-        'inline-flex size-10 items-center justify-center rounded-full ring-1',
+        'inline-flex size-7 items-center justify-center rounded-full ring-1',
         statusConfig.className,
       ].join(' ')}
       aria-label={`Status ${status}`}
     >
-      <Icon size={21} strokeWidth={2.4} />
+      <Icon size={15} strokeWidth={2.4} />
     </span>
   )
 }
@@ -124,7 +124,7 @@ export function ClientTicketsListPage() {
   return (
     <ClientLayout>
       <div className="w-full">
-        <h1 className="text-3xl font-bold text-blue-700 lg:text-4xl">
+        <h1 className="text-xl font-bold text-blue-700 lg:text-4xl">
           Meus chamados
         </h1>
 
@@ -213,11 +213,11 @@ export function ClientTicketsListPage() {
           </table>
         </section>
 
-        <section className="mt-8 overflow-hidden rounded-xl border border-slate-200 bg-white lg:hidden">
-          <div className="grid grid-cols-[92px_1fr_76px_52px] items-center border-b border-slate-200 bg-slate-50 px-4 py-5">
-            <span className="text-lg font-bold text-slate-400">Atualiz...</span>
-            <span className="text-lg font-bold text-slate-400">Título</span>
-            <span className="text-lg font-bold text-slate-400">Status</span>
+        <section className="mt-4 overflow-hidden rounded-lg border border-slate-200 bg-white lg:hidden">
+          <div className="grid grid-cols-[66px_1fr_46px_34px] items-center gap-2 border-b border-slate-200 bg-slate-50 px-3 py-3">
+            <span className="text-xs font-bold text-slate-400">Atualiz...</span>
+            <span className="text-xs font-bold text-slate-400">Título</span>
+            <span className="text-xs font-bold text-slate-400">Status</span>
             <span className="sr-only">Ação</span>
           </div>
 
@@ -225,13 +225,13 @@ export function ClientTicketsListPage() {
             {clientTickets.map((ticket) => (
               <article
                 key={ticket.id}
-                className="grid min-h-[86px] grid-cols-[92px_1fr_76px_52px] items-center gap-3 px-4 py-4"
+                className="grid min-h-[54px] grid-cols-[66px_1fr_46px_34px] items-center gap-2 px-3 py-2.5"
               >
-                <span className="whitespace-pre-line text-base font-medium leading-snug text-[#1E2024]">
+                <span className="whitespace-pre-line text-xs font-medium leading-snug text-[#1E2024]">
                   {ticket.updatedAt.replace(' ', '\n')}
                 </span>
 
-                <strong className="line-clamp-2 text-lg font-bold leading-snug text-[#1E2024]">
+                <strong className="line-clamp-2 text-xs font-bold leading-snug text-[#1E2024]">
                   {ticket.title}
                 </strong>
 
@@ -240,9 +240,9 @@ export function ClientTicketsListPage() {
                 <button
                   type="button"
                   aria-label={`Visualizar chamado ${ticket.id}`}
-                  className="inline-flex size-10 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-[#1E2024] transition hover:bg-slate-300"
+                  className="inline-flex size-7 cursor-pointer items-center justify-center rounded-md bg-slate-200 text-[#1E2024] transition hover:bg-slate-300"
                 >
-                  <Eye size={19} strokeWidth={2.2} />
+                  <Eye size={14} strokeWidth={2.2} />
                 </button>
               </article>
             ))}
